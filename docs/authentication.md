@@ -1,3 +1,6 @@
+# Work in Progress
+deciding between using OAuth and regular token auth... come back later
+
 # Authentication
 For clients to authenticate, the token key should be included in the Authorization HTTP header. The key should be prefixed by the string literal "Token", with whitespace separating the two strings. For example:
 
@@ -33,7 +36,7 @@ password | string | The user's password
 
 **Response**:
 ```json
-{ 
-    "token" : "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b" 
+{
+    "token" : "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
 }
 ```

@@ -1,10 +1,10 @@
-site_name: stagegage_api
+site_name: Stagegage API
 site_description: Stagegage Api
-repo_url: https://github.com/StagegageWebsite/stagegage_api
-site_dir: site
+repo_url: https://github.com/stagegagewebsite/stagegage_api
+site_dir: doc_site
 copyright: Copyright &copy; 2015, <a href="https://github.com/StagegageWebsite">StagegageWebsite</a>.
 
 pages:
-  - Home: 'index.md'
-  - API:
-    - Authentication: 'api/authentication.md'
+  - Installation: 'index.md'
+  - API: 'api.md'
+  - Authentication: 'authentication.md'

@@ -48,4 +48,4 @@ python stagegage_api/manage.py createsuperuser
 coming soon...
 
 # Api Documentation
-check out the [docs yo](http://StagegageWebsite.github.io/stagegage_api/).
+check out the [docs yo](http://StagegageWebsite.github.io/stagegage_api/api).
