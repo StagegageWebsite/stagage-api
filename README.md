@@ -3,7 +3,7 @@
 
 Stagegage Api. Check out the project's [documentation](http://StagegageWebsite.github.io/stagegage_api/).
 
-# Prerequisites 
+# Prerequisites
 - [virtualenv](https://virtualenv.pypa.io/en/latest/)
 - [postgresql](http://www.postgresql.org/)
 
@@ -25,33 +25,27 @@ Create the database:
 createdb stagegage_api
 ```
 
-Migrate and then run
-'''bash
+If you need to make a git repo
+```bash
+git init
+git remote add origin git@github.com:StagegageWebsite/stagegage_api.git
+```
+
+You can use the fabric file for running local commands or normal bash
+
+Migrate and run the server with fabric:
+```bash
 fab migrate
 fab run
-'''
+```
 
-You'll probably want to create a superuser as well
-
-'''bash
+You probably want to create a superuser too
+```bash
 python stagegage_api/manage.py createsuperuser
-'''
-
-# Create Servers
-By default the included fabfile will setup three environments:
-
-- dev -- The bleeding edge of development
-- qa -- For quality assurance testing
-- prod -- For the live application
-
-Create these servers on Heroku with:
-
-```bash
-fab init
 ```
 
-# Automated Deployment
-Deployment is handled via Travis. When builds pass Travis will automatically deploy that branch to Heroku. Enable this with:
-```bash
-travis encrypt $(heroku auth:token) --add deploy.api_key
-```
+# Deployment
+coming soon...
+
+# Api Documentation
+check out the [docs yo](http://StagegageWebsite.github.io/stagegage_api/).
