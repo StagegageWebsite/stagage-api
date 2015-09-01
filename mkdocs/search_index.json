@@ -1,0 +1,79 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "stagegage_api\n\n\n\n\nPrerequisites\n\n\n\n\nvirtualenv\n\n\npostgresql\n\n\n\n\nInitialize the project\n\n\nCreate and activate a virtualenv:\n\n\nvirtualenv env\nsource env/bin/activate\n\n\n\n\nInstall dependencies:\n\n\npip install -r requirements/local.txt\n\n\n\n\nCreate the database:\n\n\ncreatedb stagegage_api\n\n\n\n\nIf you need to make a git repo\n\n\ngit init\ngit remote add origin git@github.com:StagegageWebsite/stagegage_api.git\n\n\n\n\nYou can use the fabric file for running local commands or normal bash\n\n\nMigrate and run the server with fabric:\n\n\nfab migrate\nfab run\n\n\n\n\nYou probably want to create a superuser too\n\n\npython stagegage_api/manage.py createsuperuser", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/#stagegage_api", 
+            "text": "", 
+            "title": "stagegage_api"
+        }, 
+        {
+            "location": "/#prerequisites", 
+            "text": "virtualenv  postgresql", 
+            "title": "Prerequisites"
+        }, 
+        {
+            "location": "/#initialize-the-project", 
+            "text": "Create and activate a virtualenv:  virtualenv env\nsource env/bin/activate  Install dependencies:  pip install -r requirements/local.txt  Create the database:  createdb stagegage_api  If you need to make a git repo  git init\ngit remote add origin git@github.com:StagegageWebsite/stagegage_api.git  You can use the fabric file for running local commands or normal bash  Migrate and run the server with fabric:  fab migrate\nfab run  You probably want to create a superuser too  python stagegage_api/manage.py createsuperuser", 
+            "title": "Initialize the project"
+        }, 
+        {
+            "location": "/api/", 
+            "text": "Exploring the API\n\n\nthere are two good ways to explore the api\n\n\nBrowsable API\n\n\nDjango has a built it browsable api. Simply start the webserver and navigate to the appropriate url in the browser. You should be able to test the api and see results right there.\n\n\nAPI Docs\n\n\nThere are automatically created docs on all the api endpoints. Start the webserver and navigate to \nlocalhost:8000/docs\n. This shows a list of all the api endpoints and the accepted method types\n\n\nJSON Responses\n\n\nArtist\n\n\na GET request to \n/artists\n returns a list of all the artists\n\n\n[\n    {\n        \nid\n: 1,\n        \ncreated\n: \n2015-08-29T15:55:06+0000\n,\n        \nname\n: \nArtist 1\n\n    },\n]\n\n\n\n\noptionally you can get the festivals, reviews, rankings, or genres associated with each artist.\n\n\nRequest each optional field by including them as a field paramater in the GET request\n\n\nGET \n/artists/?fields=festivals\nfields=reviews=\nfields=rankings\nfields=genres\n\n\n[\n    {\n        \nid\n: 1,\n        \ncreated\n: \n2015-08-29T15:55:06+0000\n,\n        \nname\n: \nArtist 1\n,\n        \nfestivals\n: [\n            \nFestival 1\n,\n            \nFestival 2\n\n        ],\n        \nranking\n: [\n            \njoe doe : Artist 1 : Festival 1 : 4\n\n        ],\n        \nreviews\n: [\n            \ngreat band\n,\n            \nterrible band\n\n        ],\n        \ngenres\n : [\n            \nblues\n,\n            \nhip hop\n\n        ]\n    }\n]\n\n\n\n\nTo get the records for a single artist just put the id of the artist in the url\n\n\nGET \n/artists/1/\n\n\nThe same optional field paramaters apply\n\n\nFestivals\n\n\nGET \n/festivals/\n\n\n[\n    {\n        \nid\n: 1,\n        \ncreated\n: \n2015-08-29T15:55:29+0000\n,\n        \nname\n: \nFestival 1\n\n    },\n]\n\n\n\n\nyou can also get the artists, reviews, and rankings associated with a festival in the same manner\nas an artist.\n\n\nGET \n/festivals/?fields=artists\nfields=rankings\nfields=reviews\n\n\n[\n    {\n        \nid\n: 1,\n        \ncreated\n: \n2015-08-29T15:55:29+0000\n,\n        \nname\n: \nFestival 1\n,\n        \nartists\n: [\n            \nArtist 1\n,\n            \nArtist 2\n\n        ],\n        \nrankings\n: [\n            \nadmin : Artist 1 : Festival 1 : 3.000000\n,\n        ],\n        \nreviews\n: [\n            \ngreat\n,\n        ]\n    }\n]", 
+            "title": "API"
+        }, 
+        {
+            "location": "/api/#exploring-the-api", 
+            "text": "there are two good ways to explore the api", 
+            "title": "Exploring the API"
+        }, 
+        {
+            "location": "/api/#browsable-api", 
+            "text": "Django has a built it browsable api. Simply start the webserver and navigate to the appropriate url in the browser. You should be able to test the api and see results right there.", 
+            "title": "Browsable API"
+        }, 
+        {
+            "location": "/api/#api-docs", 
+            "text": "There are automatically created docs on all the api endpoints. Start the webserver and navigate to  localhost:8000/docs . This shows a list of all the api endpoints and the accepted method types", 
+            "title": "API Docs"
+        }, 
+        {
+            "location": "/api/#json-responses", 
+            "text": "", 
+            "title": "JSON Responses"
+        }, 
+        {
+            "location": "/api/#artist", 
+            "text": "a GET request to  /artists  returns a list of all the artists  [\n    {\n         id : 1,\n         created :  2015-08-29T15:55:06+0000 ,\n         name :  Artist 1 \n    },\n]  optionally you can get the festivals, reviews, rankings, or genres associated with each artist.  Request each optional field by including them as a field paramater in the GET request  GET  /artists/?fields=festivals fields=reviews= fields=rankings fields=genres  [\n    {\n         id : 1,\n         created :  2015-08-29T15:55:06+0000 ,\n         name :  Artist 1 ,\n         festivals : [\n             Festival 1 ,\n             Festival 2 \n        ],\n         ranking : [\n             joe doe : Artist 1 : Festival 1 : 4 \n        ],\n         reviews : [\n             great band ,\n             terrible band \n        ],\n         genres  : [\n             blues ,\n             hip hop \n        ]\n    }\n]  To get the records for a single artist just put the id of the artist in the url  GET  /artists/1/  The same optional field paramaters apply", 
+            "title": "Artist"
+        }, 
+        {
+            "location": "/api/#festivals", 
+            "text": "GET  /festivals/  [\n    {\n         id : 1,\n         created :  2015-08-29T15:55:29+0000 ,\n         name :  Festival 1 \n    },\n]  you can also get the artists, reviews, and rankings associated with a festival in the same manner\nas an artist.  GET  /festivals/?fields=artists fields=rankings fields=reviews  [\n    {\n         id : 1,\n         created :  2015-08-29T15:55:29+0000 ,\n         name :  Festival 1 ,\n         artists : [\n             Artist 1 ,\n             Artist 2 \n        ],\n         rankings : [\n             admin : Artist 1 : Festival 1 : 3.000000 ,\n        ],\n         reviews : [\n             great ,\n        ]\n    }\n]", 
+            "title": "Festivals"
+        }, 
+        {
+            "location": "/authentication/", 
+            "text": "Work in Progress\n\n\ndeciding between using OAuth and regular token auth... come back later\n\n\nAuthentication\n\n\nFor clients to authenticate, the token key should be included in the Authorization HTTP header. The key should be prefixed by the string literal \"Token\", with whitespace separating the two strings. For example:\n\n\nAuthorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b\n\n\n\n\nUnauthenticated responses that are denied permission will result in an HTTP \n401 Unauthorized\n response with an appropriate \nWWW-Authenticate\n header. For example:\n\n\nWWW-Authenticate: Token\n\n\n\n\nThe curl command line tool may be useful for testing token authenticated APIs. For example:\n\n\ncurl -X GET http://127.0.0.1:8000/api/v1/example/ -H 'Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'\n\n\n\n\nRetrieving Tokens\n\n\nAuthorization tokens are issued and returned when a user registers. A registered user can also retrieve their token with the following request:\n\n\nRequest\n:\n\n\nPOST\n \napi-token-auth/\n\n\nParameters:\n\n\n\n\n\n\n\n\nName\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nusername\n\n\nstring\n\n\nThe user's username\n\n\n\n\n\n\npassword\n\n\nstring\n\n\nThe user's password\n\n\n\n\n\n\n\n\nResponse\n:\n\n\n{\n    \ntoken\n : \n9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b\n\n}", 
+            "title": "Authentication"
+        }, 
+        {
+            "location": "/authentication/#work-in-progress", 
+            "text": "deciding between using OAuth and regular token auth... come back later", 
+            "title": "Work in Progress"
+        }, 
+        {
+            "location": "/authentication/#authentication", 
+            "text": "For clients to authenticate, the token key should be included in the Authorization HTTP header. The key should be prefixed by the string literal \"Token\", with whitespace separating the two strings. For example:  Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b  Unauthenticated responses that are denied permission will result in an HTTP  401 Unauthorized  response with an appropriate  WWW-Authenticate  header. For example:  WWW-Authenticate: Token  The curl command line tool may be useful for testing token authenticated APIs. For example:  curl -X GET http://127.0.0.1:8000/api/v1/example/ -H 'Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b'", 
+            "title": "Authentication"
+        }, 
+        {
+            "location": "/authentication/#retrieving-tokens", 
+            "text": "Authorization tokens are issued and returned when a user registers. A registered user can also retrieve their token with the following request:  Request :  POST   api-token-auth/  Parameters:     Name  Type  Description      username  string  The user's username    password  string  The user's password     Response :  {\n     token  :  9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b \n}", 
+            "title": "Retrieving Tokens"
+        }
+    ]
+}
