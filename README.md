@@ -1,4 +1,4 @@
-#stagegage_api
+#Stagegage Api
 [![Build Status](https://travis-ci.org/StagegageWebsite/stagegage_api.svg?branch=master)](https://travis-ci.org/StagegageWebsite/stagegage_api)
 
 Stagegage Api. Check out the project's [documentation](http://StagegageWebsite.github.io/stagegage-api/).
