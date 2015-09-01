@@ -148,28 +148,42 @@
 ]
 </code></pre>
 
-<p>optionally you can get the festivals, reviews, rankings, or genres associated with each artist.</p>
+<p>optionally you can get the festivals, reviews, ranking, or genres associated with each artist.</p>
 <p>Request each optional field by including them as a field paramater in the GET request</p>
-<p>GET <a href="#">/artists/?fields=festivals&amp;fields=reviews=&amp;fields=rankings&amp;fields=genres</a></p>
+<p>GET <a href="#">/artists/?fields=festivals&amp;fields=reviews=&amp;fields=ranking&amp;fields=genres</a></p>
 <pre><code class="json">[
     {
         &quot;id&quot;: 1,
         &quot;created&quot;: &quot;2015-08-29T15:55:06+0000&quot;,
         &quot;name&quot;: &quot;Artist 1&quot;,
         &quot;festivals&quot;: [
-            &quot;Festival 1&quot;,
-            &quot;Festival 2&quot;
+            {
+                &quot;id&quot; : 1,
+                &quot;name&quot; : &quot;Festival 1&quot;
+            },
         ],
-        &quot;ranking&quot;: [
-            &quot;joe doe : Artist 1 : Festival 1 : 4&quot;
-        ],
+        &quot;ranking&quot;: 4.0,
         &quot;reviews&quot;: [
-            &quot;great band&quot;,
-            &quot;terrible band&quot;
+             {
+                &quot;festival&quot;: &quot;Festival 1&quot;,
+                &quot;text&quot;: &quot;great&quot;,
+                &quot;id&quot;: 1,
+                &quot;user&quot;: &quot;admin&quot;
+            },
         ],
         &quot;genres&quot; : [
-            &quot;blues&quot;,
-            &quot;hip hop&quot;
+            {
+                &quot;genre&quot;: &quot;blues&quot;,
+                &quot;votes&quot;: 1
+            },
+            {
+                &quot;genre&quot;: &quot;hip hop&quot;,
+                &quot;votes&quot;: 1
+            },
+            {
+                &quot;genre&quot;: &quot;country&quot;,
+                &quot;votes&quot;: 1
+            }
         ]
     }
 ]
