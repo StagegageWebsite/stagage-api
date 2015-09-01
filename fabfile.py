@@ -44,6 +44,15 @@ def make_app(app_name):
             local('touch test/__init__.py')
             local('touch test/factories.py')
 
+def commitpush():
+    """commit and push to github"""
+    local('git add .')
+    local('git commit')
+    local('git checkout master')
+    local('git merge dev')
+    local('git push origin master')
+    local('git checkout dev')
+
 
 
 # def init():
