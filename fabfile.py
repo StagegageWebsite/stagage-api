@@ -33,12 +33,6 @@ def migrate():
     local ('python {}/manage.py migrate'.format(env.project_name))
 
 
-def start_project():
-    """Set up project"""
-    local ('pip install -r requirements/local.txt')
-    print cyan("installed dependencies")
-    migrate()
-
 def make_app(app_name):
     """set up a new app"""
     with lcd(env.project_name):

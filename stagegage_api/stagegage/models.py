@@ -8,7 +8,7 @@ class Artist(models.Model):
     name = models.CharField(max_length=300, unique=True)
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     class Meta:
         ordering = ('name',)
@@ -23,7 +23,7 @@ class Festival(models.Model):
     artists = models.ManyToManyField(Artist, related_name='festivals')
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     class Meta:
         ordering = ('name',)
@@ -34,9 +34,9 @@ class Ranking(models.Model):
     Associated with a single festival and user."""
     created = models.DateTimeField(auto_now_add=True)
     score = models.FloatField()
-    user = models.ForeignKey(User)
-    artist = models.ForeignKey(Artist)
-    festival = models.ForeignKey(Festival)
+    user = models.ForeignKey(User, related_name="rankings")
+    artist = models.ForeignKey(Artist, related_name='rankings')
+    festival = models.ForeignKey(Festival, related_name='rankings')
 
     def __unicode__(self):
         return "%s : %s : %s : %f" % (self.user, self.artist, self.festival, self.score)
@@ -50,9 +50,9 @@ class Review(models.Model):
     Associated with a single festival and user."""
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
-    user = models.ForeignKey(User)
-    artist = models.ForeignKey(Artist)
-    festival = models.ForeignKey(Festival)
+    user = models.ForeignKey(User, related_name='reviews')
+    artist = models.ForeignKey(Artist, related_name='reviews')
+    festival = models.ForeignKey(Festival, related_name='reviews')
 
     def __unicode__(self):
         return self.text[:100]
@@ -88,8 +88,8 @@ class Genre(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     genre = models.CharField(max_length=20, choices=GENRE_CHOICES)
-    artist = models.ForeignKey(Artist)
-    user = models.ForeignKey(User)
+    artist = models.ForeignKey(Artist, related_name='genres')
+    user = models.ForeignKey(User, related_name='genres')
 
     def __unicode__(self):
         return self.genre

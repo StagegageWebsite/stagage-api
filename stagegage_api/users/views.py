@@ -1,23 +1,20 @@
-from rest_framework import viewsets, mixins
-from rest_framework.permissions import AllowAny
-
+from rest_framework import  generics
+from rest_framework.authentication import BasicAuthentication
 from .models import User
-from .permissions import IsOwnerOrReadOnly
-from .serializers import CreateUserSerializer, UserSerializer
+from .permissions import IsAuthenticatedOrCreate
+from .serializers import SignUpSerializer, LoginSerializer
 
 
-class UserViewSet(mixins.CreateModelMixin,
-                  mixins.RetrieveModelMixin,
-                  mixins.UpdateModelMixin,
-                  viewsets.GenericViewSet):
-    """
-    Creates, Updates, and retrives User accounts
-    """
+class SignUp(generics.CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    serializer_class = SignUpSerializer
+    permission_classes = [IsAuthenticatedOrCreate]
 
-    def create(self, request, *args, **kwargs):
-        self.serializer_class = CreateUserSerializer
-        self.permission_classes = (AllowAny,)
-        return super(UserViewSet, self).create(request, *args, **kwargs)
+
+class Login(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = LoginSerializer
+    authentication_classes = (BasicAuthentication,)
+
+    def get_queryset(self):
+        return [self.request.user]

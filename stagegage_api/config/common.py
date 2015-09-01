@@ -19,13 +19,12 @@ class Common(Configuration):
 
         # Third party apps
         'rest_framework',            # utilities for rest apis
-        'rest_framework.authtoken',  # token authentication
         'django_rq',                 # asynchronous queuing
         'push_notifications',        # push notifications
         'versatileimagefield',       # image manipulation
+        'oauth2_provider',            # authorization
 
         # Your apps
-        'authentication',
         'users',
         'stagegage',
 
@@ -177,9 +176,13 @@ class Common(Configuration):
             'rest_framework.permissions.IsAuthenticated',
         ],
         'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.SessionAuthentication',
-            'rest_framework.authentication.TokenAuthentication',
+            'oauth2_provider.ext.rest_framework.OAuth2Authentication',
         )
+    }
+
+    OAUTH2_PROVIDER = {
+        # this is the list of available scopes
+        'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
     }
 
     # Push notifications

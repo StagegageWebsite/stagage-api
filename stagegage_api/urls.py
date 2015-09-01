@@ -8,11 +8,10 @@ from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
 
-from users.views import UserViewSet
+from users import views as user_views
 from stagegage.views import *
 
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
 router.register(r'artists', ArtistViewSet)
 router.register(r'festivals', FestivalViewSet)
 router.register(r'rankings', RankingViewSet)
@@ -21,11 +20,13 @@ router.register(r'genres', GenreViewSet)
 
 
 urlpatterns = [
+    url(r'^', include(router.urls)),
+    url(r'^sign_up/$', user_views.SignUp.as_view(), name='sign_up'),
+    url(r'^login/$', user_views.Login.as_view(), name='login'),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'^notifications/', include('push_notifications.urls')),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/v1/', include('authentication.urls')),
-    url(r'^api/v1/', include(router.urls)),
-    url(r'^api/v1/notifications/', include('push_notifications.urls')),
 
     # the 'api-root' from django rest-frameworks default router
     # http://www.django-rest-framework.org/api-guide/routers/#defaultrouter

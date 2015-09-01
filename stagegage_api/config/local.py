@@ -16,8 +16,8 @@ class Local(Common):
     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
     NOSE_ARGS = [
         BASE_DIR,
-        '--logging-clear-handlers',
-        '--with-coverage',
+        '--logging-filter=-django.db',
+        # '--with-coverage',
         '--with-progressive',
         '--cover-package={}'.format(BASE_DIR)
     ]

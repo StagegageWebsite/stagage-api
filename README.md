@@ -6,9 +6,6 @@ Stagegage Api. Check out the project's [documentation](http://StagegageWebsite.g
 # Prerequisites 
 - [virtualenv](https://virtualenv.pypa.io/en/latest/)
 - [postgresql](http://www.postgresql.org/)
-- [redis](http://redis.io/)
-- [travis cli](http://blog.travis-ci.com/2013-01-14-new-client/)
-- [heroku toolbelt](https://toolbelt.heroku.com/)
 
 # Initialize the project
 Create and activate a virtualenv:
@@ -27,19 +24,18 @@ Create the database:
 ```bash
 createdb stagegage_api
 ```
-Initialize the git repository
 
-```
-git init
-git remote add origin git@github.com:StagegageWebsite/stagegage_api.git
-```
+Migrate and then run
+'''bash
+fab migrate
+fab run
+'''
 
-Migrate, create a superuser, and run the server:
-```bash
-python stagegage_api/manage.py migrate
+You'll probably want to create a superuser as well
+
+'''bash
 python stagegage_api/manage.py createsuperuser
-python stagegage_api/manage.py runserver
-```
+'''
 
 # Create Servers
 By default the included fabfile will setup three environments:
