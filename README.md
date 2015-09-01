@@ -1,7 +1,7 @@
 #stagegage_api
 [![Build Status](https://travis-ci.org/StagegageWebsite/stagegage_api.svg?branch=master)](https://travis-ci.org/StagegageWebsite/stagegage_api)
 
-Stagegage Api. Check out the project's [documentation](http://StagegageWebsite.github.io/stagegage_api/).
+Stagegage Api. Check out the project's [documentation](http://StagegageWebsite.github.io/stagegage-api/).
 
 # Prerequisites
 - [virtualenv](https://virtualenv.pypa.io/en/latest/)
@@ -48,4 +48,4 @@ python stagegage_api/manage.py createsuperuser
 coming soon...
 
 # Api Documentation
-check out the [docs yo](http://StagegageWebsite.github.io/stagegage_api/api).
+check out the [docs yo](http://StagegageWebsite.github.io/stagegage-api/api).
