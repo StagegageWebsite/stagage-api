@@ -23,11 +23,11 @@ a GET request to [/artists](#) returns a list of all the artists
 ]
 ```
 
-optionally you can get the festivals, reviews, rankings, or genres associated with each artist.
+optionally you can get the festivals, reviews, ranking, or genres associated with each artist.
 
 Request each optional field by including them as a field paramater in the GET request
 
-GET [/artists/?fields=festivals&fields=reviews=&fields=rankings&fields=genres](#)
+GET [/artists/?fields=festivals&fields=reviews=&fields=ranking&fields=genres](#)
 
 ```json
 [
@@ -36,19 +36,33 @@ GET [/artists/?fields=festivals&fields=reviews=&fields=rankings&fields=genres](#
 		"created": "2015-08-29T15:55:06+0000",
 		"name": "Artist 1",
 		"festivals": [
-			"Festival 1",
-			"Festival 2"
+			{
+			    "id" : 1,
+			    "name" : "Festival 1"
+			},
 		],
-		"ranking": [
-			"joe doe : Artist 1 : Festival 1 : 4"
-		],
+		"ranking": 4.0,
 		"reviews": [
-			"great band",
-			"terrible band"
+			 {
+                "festival": "Festival 1",
+                "text": "great",
+                "id": 1,
+                "user": "admin"
+            },
 		],
 		"genres" : [
-			"blues",
-			"hip hop"
+			{
+                "genre": "blues",
+                "votes": 1
+            },
+            {
+                "genre": "hip hop",
+                "votes": 1
+            },
+            {
+                "genre": "country",
+                "votes": 1
+            }
 		]
 	}
 ]

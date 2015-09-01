@@ -12,9 +12,7 @@ from stagegage.views import *
 router = DefaultRouter()
 router.register(r'artists', ArtistViewSet)
 router.register(r'festivals', FestivalViewSet)
-router.register(r'rankings', RankingViewSet)
-router.register(r'reviews', ReviewViewSet)
-router.register(r'genres', GenreViewSet)
+
 
 
 urlpatterns = [

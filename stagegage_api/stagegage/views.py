@@ -7,18 +7,26 @@ from rest_framework.response import Response
 
 class ArtistViewSet(viewsets.ModelViewSet):
     """
-    Simple viewset for viewing and editing artists
+    Views for interacting with the Artist model
     """
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
     permission_classes = [AllowAny]
 
     def list(self, request, *args, **kwargs):
+        """
+        Respond with a list of all artists
+        Pass GET paramaters to the serializer to determine what fields to use.
+        """
         fields = get_fields(request)
         serializer = ArtistSerializer(self.queryset, many=True, fields=fields)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
+        """
+        Respond with a single artist
+        Pass GET params to the serializer
+        """
         fields = get_fields(request)
         artist = get_object_or_404(self.queryset, pk=pk)
         serializer = ArtistSerializer(artist, fields=fields)
@@ -27,7 +35,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
 
 class FestivalViewSet(viewsets.ModelViewSet):
     """
-    Simple viewset for viewing and editing festivals
+    Views for interacting with the Festival Model
     """
     queryset = Festival.objects.all()
     serializer_class = FestivalSerializer
@@ -43,36 +51,6 @@ class FestivalViewSet(viewsets.ModelViewSet):
         festival = get_object_or_404(self.queryset, pk=pk)
         serializer = FestivalSerializer(festival, fields=fields)
         return Response(serializer.data)
-
-
-class RankingViewSet(viewsets.ModelViewSet):
-    """
-    Simple viewset for viewing and editing rankings
-    """
-    queryset = Ranking.objects.all()
-    serializer_class = RankingSerializer
-    permission_classes = [AllowAny]
-
-
-
-class ReviewViewSet(viewsets.ModelViewSet):
-    """
-    Simple viewset for viewing and editing reviews
-    """
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
-    permission_classes = [AllowAny]
-
-
-
-
-class GenreViewSet(viewsets.ModelViewSet):
-    """
-    Simple viewset for viewing and editing genres
-    """
-    queryset = Genre.objects.all()
-    serializer_class = GenreSerializer
-    permission_classes = [AllowAny]
 
 
 
