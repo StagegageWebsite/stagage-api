@@ -1,4 +1,5 @@
 import factory
+import random
 from faker import Faker
 from users.test.factories import UserFactory
 
@@ -13,13 +14,6 @@ class ArtistFactory(factory.django.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: 'test_artist_{}'.format(n))
 
-    @factory.post_generation
-    def festivals(self, create, extraced, **kwargs):
-        if not create:
-            return
-        if extraced:
-            for festival in extraced:
-                self.festivals.add(festival)
 
 class FestivalFactory(factory.django.DjangoModelFactory):
 
@@ -37,3 +31,14 @@ class FestivalFactory(factory.django.DjangoModelFactory):
         if extraced:
             for artist in extraced:
                 self.artists.add(artist)
+
+class RankingFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = 'stagegage.Ranking'
+
+    score = random.uniform(0,10)
+    festival = factory.SubFactory(FestivalFactory)
+    artist = factory.SubFactory(ArtistFactory)
+    user = factory.SubFactory(UserFactory)
+

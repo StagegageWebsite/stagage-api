@@ -10,7 +10,7 @@ from users import views as user_views
 from stagegage.views import *
 
 router = DefaultRouter()
-router.register(r'artists', ArtistViewSet)
+router.register(r'artists', ArtistViewSet, 'artist')
 router.register(r'festivals', FestivalViewSet)
 
 

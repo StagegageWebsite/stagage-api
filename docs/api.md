@@ -53,16 +53,8 @@ GET [/artists/?fields=festivals&fields=reviews=&fields=ranking&fields=genres](#)
 		"genres" : [
 			{
                 "genre": "blues",
-                "votes": 1
+                "votes": 5
             },
-            {
-                "genre": "hip hop",
-                "votes": 1
-            },
-            {
-                "genre": "country",
-                "votes": 1
-            }
 		]
 	}
 ]

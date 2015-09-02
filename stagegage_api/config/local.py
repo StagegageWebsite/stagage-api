@@ -15,8 +15,7 @@ class Local(Common):
     INSTALLED_APPS += ('django_nose', 'rest_framework_swagger')
     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
     NOSE_ARGS = [
-        BASE_DIR,
-        '--logging-filter=-django.db',
+        '--logging-filter=-django.db, -factory',
         # '--with-coverage',
         '--with-progressive',
         '--cover-package={}'.format(BASE_DIR)
