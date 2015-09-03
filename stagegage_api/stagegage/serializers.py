@@ -1,98 +1,94 @@
-from django.db.models import Avg, Count
-from rest_framework import serializers
-from .models import *
-import json
+"""
+Serializers determine what fields are passed to JSON
+"""
 
-class DynamicFieldsModelSerializer(serializers.ModelSerializer):
+from rest_framework import serializers
+from ranking_alg import RankingAlg
+from .models import Artist, Festival
+from.controllers import *
+
+class RemovableFieldsModelSerializer(serializers.ModelSerializer):
     """
-    A ModelSerializer that takes an additional `fields` argument that
-    controls which fields should be displayed.
+    A ModelSerializer that takes an additional `remove_fields` argument that
+    allows a field to be popped off
     """
 
     def __init__(self, *args, **kwargs):
         # Don't pass the 'fields' arg up to the superclass
-        fields = kwargs.pop('fields', None)
+        remove_fields = kwargs.pop('remove_fields', None)
 
         # Instantiate the superclass normally
-        super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
+        super(RemovableFieldsModelSerializer, self).__init__(*args, **kwargs)
 
-        if fields is not None:
-            # Drop any fields that are not specified in the `fields` argument.
-            allowed = set(fields)
-            existing = set(self.fields.keys())
-            for field_name in existing - allowed:
+        if remove_fields is not None:
+            # Drop any fields that specified in the `remove_fields` argument.
+            remove_fields = set(remove_fields)
+            for field_name in remove_fields:
                 self.fields.pop(field_name)
 
 
 class FestivalListingField(serializers.RelatedField):
     """
-    Custom related field to show a festival name and id
-    """
-    def to_representation(self, value):
-        response = {'id': value.id, 'name': value.name}
-        return response
-
-
-class ReviewListingField(serializers.RelatedField):
-    """
-    Custom related field to show a review user and festival
+    Custom related field to show a festival
     """
     def to_representation(self, value):
         response = {'id': value.id,
-                    'user': value.user.username,
-                    'festival': value.festival.name,
-                    'text': value.text}
+                    'created': value.created,
+                    'name': value.name,
+                    'start_date': value.start_date}
         return response
 
-class ArtistSerializer(DynamicFieldsModelSerializer):
+
+class ArtistSerializer(RemovableFieldsModelSerializer):
     """
-    Artist serializer inherits from the dynamic serializer
+    By default Artist serializer responds with JSON
+    {
+        'id': 1,
+        'created' : 20015-1-1,
+        'name': 'abc'
+        'festivals' : <see festival listing field>
+        'ranking' : <see ranking alg>
+        'review' : 'abc',
+        'genres' : ['abc', 'abc', 'abc']
+
+    Inherits from the dynamic serializer so that festivals can be poped off
     """
 
     festivals = FestivalListingField(many=True, read_only=True)
-    reviews = ReviewListingField(many=True, read_only=True)
+    review = serializers.SerializerMethodField()
     ranking = serializers.SerializerMethodField()
     genres = serializers.SerializerMethodField()
 
     class Meta:
         model = Artist
-        fields = ('id', 'created', 'name', 'festivals', 'ranking', 'reviews', 'genres')
+        fields = ('id', 'created', 'name', 'festivals', 'ranking', 'review', 'genres')
 
     def get_ranking(self, obj):
         """
         Get average ranking score for the artist
         :return: ranking score as float (4.015) or 0 if no rankings
         """
-
-        # ranking_dict returns {'score__avg': 4.0 }
-        ranking_dict = Ranking.objects.filter(artist=obj).aggregate(Avg('score'))
-        return ranking_dict.get('score__avg', 0)
+        ranking_alg = RankingAlg(obj)
+        return ranking_alg.ranking()
 
     def get_genres(self, obj):
-        """
-        Get list of genres and their counts
-        :return: dict of genres and counts ordered by count
-            {'blues' : 5 , 'hip hop' : 4
-        """
-        #genre_query returns [{'genre' : 'blues' , 'votes' : 1 },...]
-        genre_query = Genre.objects.values("genre").annotate(votes=Count("genre")).order_by()
-        # genres = {}
-        # for genre_dict in genre_query:
-        #     genre_name = genre_dict['genre']
-        #     genre_count = genre_dict['genre__count']
-        #     genres[genre_name] = genre_count
-        return genre_query
+        return top_genres(obj)
+
+    def get_review(self, obj):
+        return "hello"
 
 
 
 
-class FestivalSerializer(DynamicFieldsModelSerializer):
+class FestivalSerializer(RemovableFieldsModelSerializer):
     """Festival serializer includes all fields."""
-    artists = serializers.StringRelatedField(many=True, required=False)
-    rankings = serializers.StringRelatedField(many=True, required=False)
-    reviews = serializers.StringRelatedField(many=True, required=False)
+
+    artists = ArtistSerializer(many=True)
 
     class Meta:
         model = Festival
-        fields = ('id', 'created', 'name', 'start_date', 'artists', 'rankings', 'reviews')
+        fields = ('id', 'created', 'name', 'start_date', 'artists')
+
+
+
 

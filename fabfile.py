@@ -13,9 +13,12 @@ env.environments = ['dev',
                     'qa',
                     'prod']
 
-
+###############################
+# LOCAL SCRIPTS
+###############################
 def run():
-    local('python {}/manage.py runserver'.format(env.project_name))
+    local('python manage.py runserver')
+
 
 def test():
     """
@@ -23,26 +26,15 @@ def test():
     """
     local('flake8 {}'.format(env.project_name))
     print cyan('flake8 passed!', bold=True)
-    local('python {}/manage.py test'.format(env.project_name))
+    local('python manage.py test'.format(env.project_name))
 
 
 def migrate():
     """Make local migartions"""
-    local ('python {}/manage.py makemigrations'.format(env.project_name))
+    local ('python manage.py makemigrations')
     print cyan('made migrations')
-    local ('python {}/manage.py migrate'.format(env.project_name))
+    local ('python manage.py migrate')
 
-
-def make_app(app_name):
-    """set up a new app"""
-    with lcd(env.project_name):
-        local('python manage.py startapp {}'.format(app_name))
-        with lcd(app_name):
-            local('touch serializers.py urls.py')
-            local ('rm tests.py')
-            local('mkdir test')
-            local('touch test/__init__.py')
-            local('touch test/factories.py')
 
 def commitpush():
     """commit and push to github"""
@@ -53,6 +45,13 @@ def commitpush():
     local('git push origin master')
     local('git checkout dev')
 
+def reseed():
+    """delete and reseed db"""
+    local('dropdb stagegage_api')
+    local('createdb stagegage_api')
+    migrate()
+    local('python manage.py fake_data')
+    local('python manage.py createsuperuser')
 
 
 # def init():

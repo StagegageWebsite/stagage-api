@@ -1,9 +1,12 @@
 from django.db import models
+from django.utils import timezone
 from users.models import User
 
 
 class Artist(models.Model):
-    """Defines a single artist. Has a many to many relationship with Festival."""
+    """
+    Defines a single artist. Has a many to many relationship with Festival.
+    """
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=300, unique=True)
 
@@ -14,9 +17,11 @@ class Artist(models.Model):
         ordering = ('name',)
 
 class Festival(models.Model):
-    """Defines a single Festival.
+    """
+    Defines a single Festival.
     start_date is date when festival starts
-    Has a many to many relationship with Artist."""
+    Has a many to many relationship with Artist.
+    """
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=300, unique=True)
     start_date = models.DateField()
@@ -29,20 +34,38 @@ class Festival(models.Model):
         ordering = ('name',)
 
 
+class RankingSet(models.Model):
+    """
+    Defines a group of rankings by a user
+    """
+    created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, related_name="rankings_set")
+    festival = models.ForeignKey(Festival, related_name='rankings_set')
+
+
+    class Meta:
+        unique_together = ('user', 'festival')
+
+
+    def months_ago(self):
+        """
+        :return: how many months ago the review set was created
+        """
+        delta = self.created - timezone.now()
+        # using 30 days as a proxy for one month
+        months_since = delta.days / 30
+        return months_since
+
+
 class Ranking(models.Model):
     """Defines a numerical score for a single artist
     Associated with a single festival and user."""
-    created = models.DateTimeField(auto_now_add=True)
+    ranking_set = models.ForeignKey(RankingSet, related_name="rankings")
     score = models.FloatField()
-    user = models.ForeignKey(User, related_name="rankings")
-    artist = models.ForeignKey(Artist, related_name='rankings')
-    festival = models.ForeignKey(Festival, related_name='rankings')
+    artist = models.ForeignKey(Artist)
 
-    def __unicode__(self):
-        return "%s : %s : %s : %f" % (self.user, self.artist, self.festival, self.score)
 
-    class Meta:
-        unique_together = ('user', 'artist', 'festival')
+
 
 
 class Review(models.Model):
@@ -63,27 +86,17 @@ class Review(models.Model):
 
 class Genre(models.Model):
     """Defines a choice of genre for an artist."""
-    AVANT = 'avant garde'
-    BLUES = 'blues'
-    COUNTRY = 'country'
-    ELECTRONIC = 'electronic'
-    FOLK = 'folk'
-    HIPHOP = 'hip hop'
-    JAZZ = 'jazz'
-    POP = 'pop'
-    RB = 'r&b'
-    ROCK = 'rock'
     GENRE_CHOICES = [
-        (AVANT, 'Avant Garde'),
-        (BLUES, 'Blues'),
-        (COUNTRY, 'Country'),
-        (ELECTRONIC, 'Electronic'),
-        (FOLK, 'Folk'),
-        (HIPHOP, 'Hip Hop'),
-        (JAZZ, 'Jazz'),
-        (POP, 'Pop'),
-        (RB, 'R&B'),
-        (ROCK, 'Rock'),
+        ('avant garde', 'Avant Garde'),
+        ('blues', 'Blues'),
+        ('country', 'Country'),
+        ('electronic', 'Electronic'),
+        ('folk', 'Folk'),
+        ('hip hop', 'Hip Hop'),
+        ('jazz', 'Jazz'),
+        ('pop', 'Pop'),
+        ('r&b', 'R&B'),
+        ('rock', 'Rock'),
     ]
 
     created = models.DateTimeField(auto_now_add=True)

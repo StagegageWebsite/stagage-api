@@ -11,5 +11,7 @@ mkdocs==0.14.0
 # Command Utils
 Fabric==1.10.1
 
-# extend browsable api
+# api docs
 django-rest-swagger==0.3.4
+
+

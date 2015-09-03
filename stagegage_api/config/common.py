@@ -25,6 +25,7 @@ class Common(Configuration):
         'oauth2_provider',            # authorization
 
         # Your apps
+        'core',
         'users',
         'stagegage',
 

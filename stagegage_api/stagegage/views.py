@@ -13,14 +13,6 @@ class ArtistViewSet(viewsets.ModelViewSet):
     serializer_class = ArtistSerializer
     permission_classes = [AllowAny]
 
-    def list(self, request, *args, **kwargs):
-        """
-        Respond with a list of all artists
-        Pass GET paramaters to the serializer to determine what fields to use.
-        """
-        fields = get_fields(request)
-        serializer = ArtistSerializer(self.queryset, many=True, fields=fields)
-        return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args, **kwargs):
         """
