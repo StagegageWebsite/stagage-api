@@ -1,54 +1,44 @@
 from .models import *
 from .serializers import *
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-class ArtistViewSet(viewsets.ModelViewSet):
+class ArtistList(generics.ListAPIView):
     """
-    Views for interacting with the Artist model
+    List of artists and associated data
     """
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
     permission_classes = [AllowAny]
 
 
-    def retrieve(self, request, pk=None, *args, **kwargs):
-        """
-        Respond with a single artist
-        Pass GET params to the serializer
-        """
-        fields = get_fields(request)
-        artist = get_object_or_404(self.queryset, pk=pk)
-        serializer = ArtistSerializer(artist, fields=fields)
-        return Response(serializer.data)
-
-
-class FestivalViewSet(viewsets.ModelViewSet):
+class ArtistDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Views for interacting with the Festival Model
+    Detail, update, and Delete view for an artist
+    """
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
+    permission_classes = [AllowAny]
+
+
+
+
+class FestivalList(generics.ListAPIView):
+    """
+    List of festivals with associated data
     """
     queryset = Festival.objects.all()
     serializer_class = FestivalSerializer
     permission_classes = [AllowAny]
 
-    def list(self, request, *args, **kwargs):
-        fields = get_fields(request)
-        serializer = FestivalSerializer(self.queryset, many=True, fields=fields)
-        return Response(serializer.data)
 
-    def retrieve(self, request, pk=None, *args, **kwargs):
-        fields = get_fields(request)
-        festival = get_object_or_404(self.queryset, pk=pk)
-        serializer = FestivalSerializer(festival, fields=fields)
-        return Response(serializer.data)
+class FestivalDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Detail, update, and delete view for a festival
+    """
+    queryset = Festival.objects.all()
+    serializer_class = FestivalSerializer
+    permission_classes = [AllowAny]
 
-
-
-
-def get_fields(request):
-    """Helper method to get fields"""
-    default_fields = ['id', 'created', 'name']
-    extra_fields = request.QUERY_PARAMS.getlist('fields')
-    return default_fields + extra_fields
