@@ -2,6 +2,7 @@ import factory
 import random
 from faker import Faker
 from .models import Genre
+from users.factories import UserFactory
 
 fake = Faker()
 
@@ -23,6 +24,7 @@ class FestivalFactory(factory.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: 'test_festival_{}'.format(n))
     start_date = factory.lazy_attribute(lambda s: fake.date())
+    ranking_set = factory.RelatedFactory(RankingSetFactory, 'festival')
 
     @factory.post_generation
     def artists(self, create, extraced, **kwargs):
@@ -37,6 +39,10 @@ class RankingSetFactory(factory.DjangoModelFactory):
     class Meta:
         model = 'stagegage.RankingSet'
 
+    festival = factory.SubFactory(FestivalFactory)
+    user = factory.SubFactory(UserFactory)
+    ranking = factory.RelatedFactory(RankingFactory, 'ranking_set')
+
 
 
 class RankingFactory(factory.DjangoModelFactory):
@@ -45,6 +51,7 @@ class RankingFactory(factory.DjangoModelFactory):
         model = 'stagegage.Ranking'
 
     score = factory.lazy_attribute(lambda s: random.uniform(0,10))
+    artist = factory.SubFactory(ArtistFactory)
 
 
 
@@ -60,3 +67,7 @@ class ReviewFactory(factory.DjangoModelFactory):
 
 
     text = factory.lazy_attribute(lambda s: fake.text())
+
+
+def setup():
+    pass

@@ -39,22 +39,13 @@ class RankingSet(models.Model):
     Defines a group of rankings by a user
     """
     created = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, related_name="rankings_set")
-    festival = models.ForeignKey(Festival, related_name='rankings_set')
+    user = models.ForeignKey(User, related_name="ranking_set")
+    festival = models.ForeignKey(Festival, related_name='ranking_set')
 
 
     class Meta:
         unique_together = ('user', 'festival')
 
-
-    def months_ago(self):
-        """
-        :return: how many months ago the review set was created
-        """
-        delta = self.created - timezone.now()
-        # using 30 days as a proxy for one month
-        months_since = delta.days / 30
-        return months_since
 
 
 class Ranking(models.Model):
@@ -63,8 +54,6 @@ class Ranking(models.Model):
     ranking_set = models.ForeignKey(RankingSet, related_name="rankings")
     score = models.FloatField()
     artist = models.ForeignKey(Artist)
-
-
 
 
 

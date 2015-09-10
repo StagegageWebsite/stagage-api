@@ -1,17 +1,24 @@
 from .models import *
 from .serializers import *
-from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
+from .ranking_alg import RankingAlgorithm
 from rest_framework.response import Response
+from rest_framework import filters
 
-class ArtistList(generics.ListAPIView):
+
+class ArtistList(APIView):
     """
     List of artists and associated data
     """
-    queryset = Artist.objects.all()
-    serializer_class = ArtistSerializer
     permission_classes = [AllowAny]
+
+    def get(self, request):
+        ranking_alg = RankingAlgorithm()
+        queryset = Artist.objects.all()
+        serializer = ArtistSerializer(queryset, many=True, context={'ranking_alg': ranking_alg})
+        return Response(sorted(serializer.data, key=lambda s: s['ranking']))
 
 
 class ArtistDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -21,7 +28,6 @@ class ArtistDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
     permission_classes = [AllowAny]
-
 
 
 
