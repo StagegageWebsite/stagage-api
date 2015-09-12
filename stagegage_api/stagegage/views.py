@@ -2,18 +2,16 @@ from .models import *
 from .serializers import *
 from rest_framework import generics
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from .ranking_alg import RankingAlgorithm
 from rest_framework.response import Response
-from rest_framework import filters
 
 
 class ArtistList(APIView):
     """
-    List of artists and associated data
+    Artists listed in descending rank
     """
     permission_classes = [AllowAny]
-
     def get(self, request):
         ranking_alg = RankingAlgorithm()
         queryset = Artist.objects.all()
@@ -27,7 +25,7 @@ class ArtistDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 
@@ -46,5 +44,5 @@ class FestivalDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Festival.objects.all()
     serializer_class = FestivalSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 

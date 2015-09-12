@@ -1,12 +1,11 @@
 from django.db import models
-from django.utils import timezone
+from model_utils.managers import PassThroughManager
 from users.models import User
+from .managers import ReviewQuerySet, GenreQuerySet
 
 
 class Artist(models.Model):
-    """
-    Defines a single artist. Has a many to many relationship with Festival.
-    """
+    """Defines a single artist. Has a many to many relationship with Festival."""
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=300, unique=True)
 
@@ -15,6 +14,7 @@ class Artist(models.Model):
 
     class Meta:
         ordering = ('name',)
+
 
 class Festival(models.Model):
     """
@@ -35,13 +35,13 @@ class Festival(models.Model):
 
 
 class RankingSet(models.Model):
-    """
-    Defines a group of rankings by a user
-    """
+    """Defines a group of rankings for a festival by a user."""
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, related_name="ranking_set")
     festival = models.ForeignKey(Festival, related_name='ranking_set')
 
+    def __unicode__(self):
+        return "{} : {}".format(self.user, self.festival)
 
     class Meta:
         unique_together = ('user', 'festival')
@@ -49,25 +49,33 @@ class RankingSet(models.Model):
 
 
 class Ranking(models.Model):
-    """Defines a numerical score for a single artist
-    Associated with a single festival and user."""
+    """
+    Defines a numerical score for a single artist
+    Associated with a single festival and user.
+    """
     ranking_set = models.ForeignKey(RankingSet, related_name="rankings")
     score = models.FloatField()
     artist = models.ForeignKey(Artist)
 
+    def __unicode__(self):
+        return "{} : {}".format(self.artist, self.score)
+
 
 
 class Review(models.Model):
-    """Defines a text review of a single artist
-    Associated with a single festival and user."""
+    """
+    Defines a text review of a single artist
+    Associated with a single festival and user.
+    """
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
     user = models.ForeignKey(User, related_name='reviews')
     artist = models.ForeignKey(Artist, related_name='reviews')
     festival = models.ForeignKey(Festival, related_name='reviews')
+    objects  = PassThroughManager.for_queryset_class(ReviewQuerySet)()
 
     def __unicode__(self):
-        return self.text[:100]
+        return unicode(self.text[:100])
 
     class Meta:
         unique_together = ('user', 'artist', 'festival')
@@ -92,6 +100,7 @@ class Genre(models.Model):
     genre = models.CharField(max_length=20, choices=GENRE_CHOICES)
     artist = models.ForeignKey(Artist, related_name='genres')
     user = models.ForeignKey(User, related_name='genres')
+    objects = PassThroughManager.for_queryset_class(GenreQuerySet)()
 
     def __unicode__(self):
         return self.genre
