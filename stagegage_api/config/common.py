@@ -15,14 +15,16 @@ class Common(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django.contrib.sites',
 
 
         # Third party apps
         'rest_framework',            # utilities for rest apis
+        'rest_framework.authtoken',  # token authorization
+        'rest_auth',
         'django_rq',                 # asynchronous queuing
         'push_notifications',        # push notifications
         'versatileimagefield',       # image manipulation
-        'oauth2_provider',            # authorization
 
         # Your apps
         'core',
@@ -177,14 +179,12 @@ class Common(Configuration):
             'rest_framework.permissions.IsAuthenticated',
         ],
         'DEFAULT_AUTHENTICATION_CLASSES': (
-            'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.TokenAuthentication',
         )
     }
 
-    OAUTH2_PROVIDER = {
-        # this is the list of available scopes
-        'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
-    }
 
     # Push notifications
     DJANGO_PUSH_NOTIFICATIONS = {
