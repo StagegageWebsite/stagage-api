@@ -4,7 +4,6 @@ Serializers determine what fields are passed to JSON
 from django.db.models import Count
 from rest_framework import serializers
 from .models import Artist, Festival
-from .ranking_alg import RankingAlgorithm
 from .models import Genre, Review
 
 
@@ -28,11 +27,10 @@ class BaseArtistSerializer(serializers.ModelSerializer):
 
     def get_ranking(self, artist):
         """
-        Get average ranking score for the artist
-        :return: ranking score as float (4.015) or 0 if no rankings
+        get order of artist in list
         """
-        ranking_alg = self.context.get('ranking_alg')
-        return ranking_alg.get_rank(artist.id)
+        return self.instance.index(artist) + 1
+
 
     def get_genres(self, artist):
         """Return top 3 genres"""
@@ -63,9 +61,8 @@ class FestivalSerializer(BaseFestivalSerializer):
         fields = ('id', 'created', 'name', 'start_date', 'artists')
 
     def get_artists(self, obj):
-        artists = Artist.objects.filter(festivals=obj)
-        ranking_alg = RankingAlgorithm(festival=obj)
-        ser = BaseArtistSerializer(artists, many=True, context={'ranking_alg': ranking_alg})
-        return sorted(ser.data, key=lambda s: s['ranking'])
+        artists = Artist.objects.filter(festivals=obj).rank()
+        ser = BaseArtistSerializer(artists, many=True)
+        return ser.data
 
 
