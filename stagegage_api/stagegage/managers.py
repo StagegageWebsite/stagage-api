@@ -1,19 +1,7 @@
 """
 Custom queries for models
 """
-from django.db.models import QuerySet, Count, Sum
-
-class ArtistQuerySet(QuerySet):
-
-    def rank(self):
-        return self.extra(select={'ranking' : """SELECT
-            CASE WHEN Sum(weight) = 0 THEN 0
-            ELSE Sum(weighted_score) / Sum(weight) END
-            FROM stagegage_ranking WHERE stagegage_ranking.artist_id = stagegage_artist.id"""})\
-            .order_by('ranking')
-
-
-
+from django.db.models import QuerySet, Count
 
 class GenreQuerySet(QuerySet):
     def top_genres(self, artist):
@@ -27,5 +15,9 @@ class GenreQuerySet(QuerySet):
 class ReviewQuerySet(QuerySet):
     def latest_review(self, artist):
         """Return latest review for an artist"""
-        return self.filter(artist=artist).latest("created")
+        qs = self.filter(artist=artist)
+        if qs.exists():
+            qs = qs.latest("created")
+        return qs
+
 

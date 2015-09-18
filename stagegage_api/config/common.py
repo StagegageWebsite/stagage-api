@@ -22,6 +22,11 @@ class Common(Configuration):
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authorization
         'rest_auth',
+        'allauth',                    # registration
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.facebook',
+        'rest_auth.registration',
         'django_rq',                 # asynchronous queuing
         'push_notifications',        # push notifications
         'versatileimagefield',       # image manipulation
@@ -60,6 +65,9 @@ class Common(Configuration):
             },
         },
     ]
+
+
+    SITE_ID = 1
 
     SECRET_KEY = 'Not a secret'
     WSGI_APPLICATION = 'wsgi.application'
@@ -169,7 +177,7 @@ class Common(Configuration):
     REST_FRAMEWORK = {
         "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
         'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-        'PAGE_SIZE': 2,
+        'PAGE_SIZE': 25,
         'DEFAULT_RENDERER_CLASSES': (
             'rest_framework.renderers.JSONRenderer',
             'rest_framework.renderers.BrowsableAPIRenderer',
@@ -181,8 +189,17 @@ class Common(Configuration):
             'rest_framework.authentication.BasicAuthentication',
             'rest_framework.authentication.SessionAuthentication',
             'rest_framework.authentication.TokenAuthentication',
-        )
+        ),
+        'TEST_REQUEST_DEFAULT_FORMAT': 'json'
     }
+
+    AUTHENTICATION_BACKENDS = (
+        # Needed to login by username in Django admin, regardless of `allauth`
+        'django.contrib.auth.backends.ModelBackend',
+
+        # `allauth` specific authentication methods, such as login by e-mail
+        'allauth.account.auth_backends.AuthenticationBackend',
+    )
 
 
     # Push notifications

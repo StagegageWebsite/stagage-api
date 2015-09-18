@@ -18,19 +18,11 @@ class BaseFestivalSerializer(serializers.ModelSerializer):
 class BaseArtistSerializer(serializers.ModelSerializer):
     """Artist serializer without festivals."""
     review = serializers.SerializerMethodField()
-    ranking = serializers.SerializerMethodField()
     genres = serializers.SerializerMethodField()
 
     class Meta:
         model = Artist
-        fields = ('id', 'created', 'name', 'ranking', 'review', 'genres')
-
-    def get_ranking(self, artist):
-        """
-        get order of artist in list
-        """
-        return self.instance.index(artist) + 1
-
+        fields = ('id', 'created', 'name', 'score', 'review', 'genres')
 
     def get_genres(self, artist):
         """Return top 3 genres"""
@@ -39,7 +31,9 @@ class BaseArtistSerializer(serializers.ModelSerializer):
     def get_review(self, artist):
         """Return latest review partial."""
         review = Review.objects.latest_review(artist)
-        return review.text[:100]
+        if review:
+            return review.text[:100]
+        return ""
 
 
 class ArtistSerializer(BaseArtistSerializer):
@@ -48,7 +42,7 @@ class ArtistSerializer(BaseArtistSerializer):
 
     class Meta:
         model = Artist
-        fields = ('id', 'created', 'name', 'ranking', 'review', 'genres', 'festivals')
+        fields = ('id', 'created', 'name', 'score', 'review', 'genres', 'festivals')
 
 
 
@@ -61,7 +55,7 @@ class FestivalSerializer(BaseFestivalSerializer):
         fields = ('id', 'created', 'name', 'start_date', 'artists')
 
     def get_artists(self, obj):
-        artists = Artist.objects.filter(festivals=obj).rank()
+        artists = Artist.objects.filter(festivals=obj).order_by('-score')
         ser = BaseArtistSerializer(artists, many=True)
         return ser.data
 

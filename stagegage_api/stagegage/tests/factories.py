@@ -1,8 +1,10 @@
-import factory
 import random
+
+import factory
 from faker import Faker
 from stagegage.models import Genre
-from users.factories import UserFactory
+from users.tests.factories import UserFactory
+
 
 fake = Faker()
 
@@ -14,6 +16,8 @@ class ArtistFactory(factory.DjangoModelFactory):
         django_get_or_create = ('name',)
 
     name = factory.Sequence(lambda n: 'test_artist_{}'.format(n))
+    score = factory.lazy_attribute(lambda s: round(random.uniform(0, 10), 5))
+
 
 
 
@@ -77,7 +81,8 @@ class GenreFactory(factory.DjangoModelFactory):
 
 def set_up_single():
     """Set up a single instance of each model."""
-    user = UserFactory()
+    #TODO: admin factory
+    user = UserFactory(username='admin', is_staff=True)
     artist = ArtistFactory()
     festival = FestivalFactory(artists=(artist,))
     ranking_set = RankingSetFactory(festival=festival, user=user)
@@ -114,7 +119,6 @@ def set_up_many(num_instances):
 
                 genre = GenreFactory.create(review=review)
                 genres.append(genre)
-            ranking_set.set_weight()
     return {'users': users,
             'artists': artists,
             'festivals': festivals,

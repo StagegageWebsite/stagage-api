@@ -3,6 +3,7 @@ from .serializers import ArtistSerializer, FestivalSerializer
 from .permissions import IsAdminOrReadOnly
 
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 
 
@@ -11,10 +12,12 @@ class ArtistViewSet(viewsets.ModelViewSet):
     """
     Viewset for artists
     """
-    queryset = Artist.objects.all().rank()
     serializer_class = ArtistSerializer
     permission_classes = [IsAdminOrReadOnly]
 
+    def get_queryset(self):
+        #TODO: filter by festivals
+        return Artist.objects.all().order_by('-score')
 
 
 
