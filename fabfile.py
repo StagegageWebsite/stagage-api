@@ -121,6 +121,10 @@ def configure_sever():
     set_aws_keys()
 
 
+def set_key():
+    local('heroku config:set DJANGO_SECRET_KEY="{}"'.format(create_secret_key()))
+
+
 def deploy_docs():
     print cyan('Deploying docs...')
     local('mkdocs gh-deploy')
