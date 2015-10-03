@@ -134,10 +134,10 @@ class Common(Configuration):
             'simple': {
                 'format': '%(levelname)s %(message)s'
             },
-            "rq_console": {
-                "format": "%(asctime)s %(message)s",
-                "datefmt": "%H:%M:%S",
-            },
+            # "rq_console": {
+            #     "format": "%(asctime)s %(message)s",
+            #     "datefmt": "%H:%M:%S",
+            # },
         },
         'handlers': {
             'mail_admins': {
@@ -150,12 +150,12 @@ class Common(Configuration):
                 'class': 'logging.StreamHandler',
                 'formatter': 'simple'
             },
-            "rq_console": {
-                "level": "DEBUG",
-                "class": "rq.utils.ColorizingStreamHandler",
-                "formatter": "rq_console",
-                "exclude": ["%(asctime)s"],
-            },
+            # "rq_console": {
+            #     "level": "DEBUG",
+            #     "class": "rq.utils.ColorizingStreamHandler",
+            #     "formatter": "rq_console",
+            #     "exclude": ["%(asctime)s"],
+            # },
         },
         'loggers': {
             'django.request': {
@@ -163,10 +163,10 @@ class Common(Configuration):
                 'level': 'ERROR',
                 'propagate': True
             },
-            "rq.worker": {
-                "handlers": ["rq_console"],
-                "level": "DEBUG"
-            },
+            # "rq.worker": {
+            #     "handlers": ["rq_console"],
+            #     "level": "DEBUG"
+            # },
         }
     }
 
