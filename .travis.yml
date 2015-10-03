@@ -1,7 +1,6 @@
 language: python
 services:
   - postgresql
-  - redis-server
 python:
   - "2.7"
 before_script:
@@ -17,10 +16,7 @@ after_success:
 
 deploy:
   provider: heroku
-  app:
-    master: stagegage_api-dev
-    qa: stagegage_api-qa
-    prod: stagegage_api-prod
+  app: stagegage_api
   on: 
     repo: StagegageWebsite/stagegage_api
   run:

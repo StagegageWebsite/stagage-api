@@ -12,9 +12,8 @@ router.register(r'festivals', FestivalViewSet, base_name='festivals')
 
 urlpatterns = patterns('',
     (r'^', include(router.urls)),
-    (r'^auth/', include('rest_auth.urls')),
-    (r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-    (r'^notifications/', include('push_notifications.urls')),
+    (r'^auth/', include('rest_framework_social_oauth2.urls')),
+    # (r'^notifications/', include('push_notifications.urls')),
     (r'^docs/', include('rest_framework_swagger.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('allauth.urls')),

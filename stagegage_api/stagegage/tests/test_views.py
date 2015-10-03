@@ -35,13 +35,19 @@ class ArtistTests(APITestCase):
         self.assertEqual(response_dict, [self.test_dict])
 
     def test_create(self):
-        #TODO: Nested created
         artist = ArtistFactory.build()
-        data = {'name': artist.name}
+        f1 = FestivalFactory()
+        f2 = FestivalFactory.build()
+
+        data = {'name': artist.name, 'festivals': [
+            {'name': f1.name, 'start_date': f1.start_date},
+            {'name': f2.name, 'start_date': f2.start_date}]}
+        from nose.tools import set_trace; set_trace()
         response = self.client.post(reverse('artists-list'), data)
         created_artist = Artist.objects.get(name=artist.name)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(str(artist), str(created_artist))
+        self.assertEqual(created_artist.festivals.count(), 2)
 
     def test_retrieve(self):
         response = self.client.get(reverse('artists-detail', args=(self.artist.id,)))

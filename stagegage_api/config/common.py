@@ -21,15 +21,10 @@ class Common(Configuration):
         # Third party apps
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authorization
-        'rest_auth',
-        'allauth',                    # registration
-        'allauth.account',
-        'allauth.socialaccount',
-        'allauth.socialaccount.providers.facebook',
-        'rest_auth.registration',
-        'django_rq',                 # asynchronous queuing
-        'push_notifications',        # push notifications
-        'versatileimagefield',       # image manipulation
+        'oauth2_provider',
+        'social.apps.django_app.default',
+        'rest_framework_social_oauth2',
+        # 'corsheaders'
 
         # Your apps
         'scripts',
@@ -40,6 +35,7 @@ class Common(Configuration):
 
     # https://docs.djangoproject.com/en/1.8/topics/http/middleware/
     MIDDLEWARE_CLASSES = (
+        # 'corsheaders.middleware.CorsMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
@@ -47,6 +43,9 @@ class Common(Configuration):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
+
+    # CORS_ORIGIN_ALLOW_ALL = True
+
 
     ROOT_URLCONF = 'urls'
 
@@ -61,13 +60,14 @@ class Common(Configuration):
                     'django.template.context_processors.request',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
+                    'social.apps.django_app.context_processors.backends',
+                    'social.apps.django_app.context_processors.login_redirect',
                 ],
             },
         },
     ]
 
 
-    SITE_ID = 1
 
     SECRET_KEY = 'Not a secret'
     WSGI_APPLICATION = 'wsgi.application'
@@ -85,8 +85,8 @@ class Common(Configuration):
     DEBUG = values.BooleanValue(False)
     TEMPLATE_DEBUG = DEBUG
 
-    # Email
-    EMAIL_BACKEND = values.Value('django.core.mail.backends.smtp.EmailBackend')
+    # # Email
+    # EMAIL_BACKEND = values.Value('django.core.mail.backends.smtp.EmailBackend')
 
     MANAGERS = (
         ("Author", 'garrettdwells@gmail.com'),
@@ -189,6 +189,8 @@ class Common(Configuration):
             'rest_framework.authentication.BasicAuthentication',
             'rest_framework.authentication.SessionAuthentication',
             'rest_framework.authentication.TokenAuthentication',
+            'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+            'rest_framework_social_oauth2.authentication.SocialAuthentication',
         ),
         'TEST_REQUEST_DEFAULT_FORMAT': 'json'
     }
@@ -196,27 +198,37 @@ class Common(Configuration):
     AUTHENTICATION_BACKENDS = (
         # Needed to login by username in Django admin, regardless of `allauth`
         'django.contrib.auth.backends.ModelBackend',
-
-        # `allauth` specific authentication methods, such as login by e-mail
-        'allauth.account.auth_backends.AuthenticationBackend',
+        'rest_framework_social_oauth2.backends.DjangoOAuth2',
+        'social.backends.facebook.FacebookAppOAuth2',
+        'social.backends.facebook.FacebookOAuth2',
     )
 
 
-    # Push notifications
-    DJANGO_PUSH_NOTIFICATIONS = {
-        'SERVICE': 'push_notifications.services.zeropush.ZeroPushService',
-        'AUTH_TOKEN': values.Value('local-development')
-    }
+    # # Push notifications
+    # DJANGO_PUSH_NOTIFICATIONS = {
+    #     'SERVICE': 'push_notifications.services.zeropush.ZeroPushService',
+    #     'AUTH_TOKEN': values.Value('local-development')
+    # }
 
-    # Versatile Image Field
-    VERSATILEIMAGEFIELD_SETTINGS = {
-        # The amount of time, in seconds, that references to created images
-        # should be stored in the cache. Defaults to `2592000` (30 days)
-        'cache_length': 2592000,
-        'cache_name': 'versatileimagefield_cache',
-        'jpeg_resize_quality': 70,
-        'sized_directory_name': '__sized__',
-        'filtered_directory_name': '__filtered__',
-        'placeholder_directory_name': '__placeholder__',
-        'create_images_on_demand': False
-    }
+    # # Versatile Image Field
+    # VERSATILEIMAGEFIELD_SETTINGS = {
+    #     # The amount of time, in seconds, that references to created images
+    #     # should be stored in the cache. Defaults to `2592000` (30 days)
+    #     'cache_length': 2592000,
+    #     'cache_name': 'versatileimagefield_cache',
+    #     'jpeg_resize_quality': 70,
+    #     'sized_directory_name': '__sized__',
+    #     'filtered_directory_name': '__filtered__',
+    #     'placeholder_directory_name': '__placeholder__',
+    #     'create_images_on_demand': False
+    # }
+
+    # Facebook configuration
+    SOCIAL_AUTH_FACEBOOK_KEY = '1628663287375931'
+    SOCIAL_AUTH_FACEBOOK_SECRET = 'a2487e5cb5fe361e98231e963879d75e'
+
+    # Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from facebook.
+    # Email is not sent by default, to get it, you must request the email permission:
+    SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+

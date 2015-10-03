@@ -1,7 +1,6 @@
 """
 Serializers determine what fields are passed to JSON
 """
-from django.db.models import Count
 from rest_framework import serializers
 from .models import Artist, Festival
 from .models import Genre, Review
@@ -38,12 +37,21 @@ class BaseArtistSerializer(serializers.ModelSerializer):
 
 class ArtistSerializer(BaseArtistSerializer):
     """Same as Base serializer but includes festivals."""
-    festivals = BaseFestivalSerializer(many=True, read_only=True)
+    festivals = BaseFestivalSerializer(many=True)
 
     class Meta:
         model = Artist
         fields = ('id', 'created', 'name', 'score', 'review', 'genres', 'festivals')
 
+
+    def create(self, validated_data):
+        from nose.tools import set_trace; set_trace()
+        festivals_data = validated_data.pop('festivals')
+        artist = Artist.objects.create(**validated_data)
+        for festival_data in festivals_data:
+            festival = Festival.objects.get_or_create(**festival_data)
+            artist.festivals.add(festival)
+        return artist
 
 
 class FestivalSerializer(BaseFestivalSerializer):
@@ -58,5 +66,17 @@ class FestivalSerializer(BaseFestivalSerializer):
         artists = Artist.objects.filter(festivals=obj).order_by('-score')
         ser = BaseArtistSerializer(artists, many=True)
         return ser.data
+
+    def validate(self, attrs):
+        from nose.tools import set_trace; set_trace()
+        return attrs
+
+    def create(self, validated_data):
+        artists_data = validated_data.pop('artists')
+        festival = Festival.objects.create(**validated_data)
+        for artist_data in artists_data:
+            artist = Artist.objects.get_or_create(**artist_data)
+            festival.artists.add(artist)
+        return festival
 
 
