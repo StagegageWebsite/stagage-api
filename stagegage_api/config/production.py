@@ -41,6 +41,10 @@ class Production(Common):
         )),
     )
 
+    
+    DEBUG = values.BooleanValue(True)
+    TEMPLATE_DEBUG = DEBUG
+
     # Media files
     # http://django-storages.readthedocs.org/en/latest/index.html
     # INSTALLED_APPS += ('storages',)
