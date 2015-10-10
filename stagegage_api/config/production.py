@@ -30,7 +30,7 @@ class Production(Common):
     # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ["*"]
 
-    INSTALLED_APPS += ("gunicorn")
+    INSTALLED_APPS += ("gunicorn",)
 
     # Template
     # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
