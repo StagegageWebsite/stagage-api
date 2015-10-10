@@ -30,7 +30,7 @@ class Production(Common):
     # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ["*"]
 
-    INSTALLED_APPS += ("gunicorn", )
+    INSTALLED_APPS += ("gunicorn")
 
     # Template
     # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
@@ -40,6 +40,10 @@ class Production(Common):
             'django.template.loaders.app_directories.Loader',
         )),
     )
+
+    INSTALLED_APPS += ("corsheaders",)
+    MIDDLEWARE_CLASSES = ("corsheaders.middleware.CorsMiddleware",) + MIDDLEWARE_CLASSES
+    CORS_ORIGIN_ALLOW_ALL = True
 
 
     # Media files
