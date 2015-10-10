@@ -7,18 +7,19 @@ before_script:
 - export DATABASE_URL=postgres://postgres@localhost/
 - export DJANGO_SECRET=`openssl rand -base64 32`
 - psql -c 'CREATE DATABASE "";' -U postgres
-install: 
+install:
   - "pip install -r requirements/test.txt"
-script: 
-  - ./stagegage_api/manage.py test stagegage_api
+script:
+  - ./stagegage_api/manage.py test stagegage
 after_success:
   - coveralls
 
 deploy:
   provider: heroku
   app: stagegage_api
-  on: 
-    repo: StagegageWebsite/stagegage_api
+  api_key: "710f3b9d-ee5c-49a4-b63c-3dda71ba7538"
+  on:
+    repo: StagegageWebsite/stagegage-api
   run:
     - "./stagegage_api/manage.py migrate"
 
@@ -28,7 +29,7 @@ notifications:
 # This reportedly works around an issue downloading packages from pypi on
 # travis. Consider removing this after the underlying issue is fixed.
 # https://github.com/travis-ci/travis-ci/issues/2389
-sudo: false
+# sudo: false
 
 matrix:
   fast_finish: true

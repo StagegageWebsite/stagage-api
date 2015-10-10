@@ -42,7 +42,6 @@ class ArtistTests(APITestCase):
         data = {'name': artist.name, 'festivals': [
             {'name': f1.name, 'start_date': f1.start_date},
             {'name': f2.name, 'start_date': f2.start_date}]}
-        from nose.tools import set_trace; set_trace()
         response = self.client.post(reverse('artists-list'), data)
         created_artist = Artist.objects.get(name=artist.name)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

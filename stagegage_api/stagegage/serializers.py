@@ -45,7 +45,6 @@ class ArtistSerializer(BaseArtistSerializer):
 
 
     def create(self, validated_data):
-        from nose.tools import set_trace; set_trace()
         festivals_data = validated_data.pop('festivals')
         artist = Artist.objects.create(**validated_data)
         for festival_data in festivals_data:
