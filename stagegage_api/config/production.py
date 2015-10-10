@@ -42,6 +42,7 @@ class Production(Common):
     )
 
     INSTALLED_APPS += ("corsheaders",)
+    MIDDLEWARE_CLASSES = Common.MIDDLEWARE_CLASSES
     MIDDLEWARE_CLASSES = ("corsheaders.middleware.CorsMiddleware",) + MIDDLEWARE_CLASSES
     CORS_ORIGIN_ALLOW_ALL = True
 
