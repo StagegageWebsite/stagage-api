@@ -7,11 +7,9 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 """
 import os
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config")
 os.environ.setdefault("DJANGO_CONFIGURATION", "Production")
 
-import pdb;pdb.set_trace()
 from configurations.wsgi import get_wsgi_application  # noqa
 from whitenoise.django import DjangoWhiteNoise        # noqa
 
