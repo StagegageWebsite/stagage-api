@@ -12,7 +12,7 @@ class Local(Common):
 
     # Testing
     INSTALLED_APPS = Common.INSTALLED_APPS
-    INSTALLED_APPS += ('django_nose', 'rest_framework_swagger')
+    INSTALLED_APPS += ('django_nose', )
     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
     NOSE_ARGS = [
         '--logging-filter=-django.db, -factory',
