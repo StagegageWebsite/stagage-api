@@ -21,9 +21,9 @@ def test():
     """
     Runs nose test suite
     """
-    local('flake8 {}'.format(env.project_name))
-    print cyan('flake8 passed!', bold=True)
-    local('python manage.py test'.format(env.project_name))
+#    local('flake8 {}'.format(env.project_name))
+#   print cyan('flake8 passed!', bold=True)
+    local('python manage.py test stagegage')
 
 
 def migrate():

@@ -66,16 +66,12 @@ class FestivalSerializer(BaseFestivalSerializer):
         ser = BaseArtistSerializer(artists, many=True)
         return ser.data
 
-    def validate(self, attrs):
-        from nose.tools import set_trace; set_trace()
-        return attrs
-
-    def create(self, validated_data):
-        artists_data = validated_data.pop('artists')
-        festival = Festival.objects.create(**validated_data)
-        for artist_data in artists_data:
-            artist = Artist.objects.get_or_create(**artist_data)
-            festival.artists.add(artist)
-        return festival
+    # def create(self, validated_data):
+    #     artists_data = validated_data.pop('artists')
+    #     festival = Festival.objects.create(**validated_data)
+    #     for artist_data in artists_data:
+    #         artist = Artist.objects.get_or_create(**artist_data)
+    #         festival.artists.add(artist)
+    #     return festival
 
 

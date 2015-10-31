@@ -3,7 +3,7 @@ from django.utils import timezone
 from model_utils.managers import PassThroughManager
 from users.models import User
 from .managers import ReviewQuerySet, GenreQuerySet
-
+from django.conf import settings
 
 class Artist(models.Model):
     """
@@ -13,6 +13,15 @@ class Artist(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=300, unique=True)
     score = models.FloatField(default=0, editable=False)
+
+    def to_dict(self):
+        """Return festival object as dictionary."""
+        return {'id': self.id,
+          'created': format_date(self.created),
+          'name': self.name,
+          'score': self.score
+        }
+
 
     def __unicode__(self):
         return unicode(self.name)
@@ -34,6 +43,14 @@ class Festival(models.Model):
 
     def __unicode__(self):
         return unicode(self.name)
+
+    def to_dict(self):
+        """Return festival object as dictionary."""
+        return {'id': self.id,
+          'created': format_date(self.created),
+          'name': self.name,
+          'start_date': self.start_date,
+        }
 
     class Meta:
         ordering = ('name',)
@@ -111,5 +128,6 @@ class Genre(models.Model):
         return self.genre
 
 
-
+def format_date(date):
+    return date.strftime(settings.REST_FRAMEWORK['DATETIME_FORMAT'])
 
