@@ -54,7 +54,13 @@
                 
                 
                     <li class="active">
-                        <a href=".">Installation</a>
+                        <a href=".">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="installation/">Installation</a>
                     </li>
                 
                 
@@ -66,7 +72,13 @@
                 
                 
                     <li >
-                        <a href="authentication/">Authentication</a>
+                        <a href="models/">Models</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="next_steps/">Road Map</a>
                     </li>
                 
                 
@@ -86,7 +98,7 @@
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="api/">
+                        <a rel="prev" href="installation/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -111,54 +123,43 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#stagegage_api">stagegage_api</a></li>
+        <li class="main active"><a href="#directory-overview">Directory Overview</a></li>
         
-    
-        <li class="main "><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#stagegage_api">Stagegage_api</a></li>
         
-    
-        <li class="main "><a href="#initialize-the-project">Initialize the project</a></li>
+            <li><a href="#docs">Docs</a></li>
+        
+            <li><a href="#requirements">Requirements</a></li>
         
     
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="stagegage_api">stagegage_api</h1>
-<p><a href="https://travis-ci.org/StagegageWebsite/stagegage_api"><img alt="Build Status" src="https://travis-ci.org/StagegageWebsite/stagegage_api.svg?branch=master" /></a></p>
-<h1 id="prerequisites">Prerequisites</h1>
-<ul>
-<li><a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a></li>
-<li><a href="http://www.postgresql.org/">postgresql</a></li>
-</ul>
-<h1 id="initialize-the-project">Initialize the project</h1>
-<p>Create and activate a virtualenv:</p>
-<pre><code class="bash">virtualenv env
-source env/bin/activate
-</code></pre>
-
-<p>Install dependencies:</p>
-<pre><code class="bash">pip install -r requirements/local.txt
-</code></pre>
-
-<p>Create the database:</p>
-<pre><code class="bash">createdb stagegage_api
-</code></pre>
-
-<p>If you need to make a git repo</p>
-<pre><code class="bash">git init
-git remote add origin git@github.com:StagegageWebsite/stagegage_api.git
-</code></pre>
-
-<p>You can use the fabric file for running local commands or normal bash</p>
-<p>Migrate and run the server with fabric:</p>
-<pre><code class="bash">fab migrate
-fab run
-</code></pre>
-
-<p>You probably want to create a superuser too</p>
-<pre><code class="bash">python stagegage_api/manage.py createsuperuser
-</code></pre></div>
+<p>The Stagegage API is a RESTful API that provides the backend to the Stagegage frontend.
+It is built using the Django-rest framework.</p>
+<p>See the <a href="./api">API documentation</a> for details on the api endpoints, <a href="./installation">installation instructions</a>
+for getting it up and running locally, <a href="./models">models documentation</a> for details on the models, and the <a href="./next_steps">road map</a> for what is left to be done.</p>
+<h1 id="directory-overview">Directory Overview</h1>
+<h2 id="stagegage_api">Stagegage_api</h2>
+<p>Where the business logic of the app lives</p>
+<p><strong>Config:</strong>
+Different Django configurations for running in production vs. running locally.</p>
+<p><strong>Contrib:</strong>
+Honestly not sure if this directory is needed.</p>
+<p><strong>Scripts:</strong>
+Management commands for running one off scripts.</p>
+<p><strong>Stagegage:</strong>
+Where most of the important code lives. The models, serializers, and views are probably the
+most interesting</p>
+<p><strong>Users:</strong>
+Where anything to do with Users lives, including user auth.</p>
+<h2 id="docs">Docs</h2>
+<p>Markdown file for documentation website. Uses the mkdocs library to create a
+documentation website.</p>
+<h2 id="requirements">Requirements</h2>
+<p>Third party libraries used by the API. base.txt provides the libraries used everywhere,
+and then local, production, and test packages are loaded at the appropriate time.</p></div>
             
         </div>
 
@@ -207,5 +208,5 @@ fab run
 
 <!--
 MkDocs version : 0.14.0
-Build Date UTC : 2015-09-01 21:24:21.217345
+Build Date UTC : 2016-01-07 06:24:11.444459
 -->

@@ -54,7 +54,13 @@
                 
                 
                     <li >
-                        <a href="..">Installation</a>
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../installation/">Installation</a>
                     </li>
                 
                 
@@ -66,7 +72,13 @@
                 
                 
                     <li >
-                        <a href="../authentication/">Authentication</a>
+                        <a href="../models/">Models</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../next_steps/">Road Map</a>
                     </li>
                 
                 
@@ -81,12 +93,12 @@
                 </li>
                 
                     <li >
-                        <a rel="next" href="..">
+                        <a rel="next" href="../installation/">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
                     <li >
-                        <a rel="prev" href="../authentication/">
+                        <a rel="prev" href="../models/">
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
@@ -143,55 +155,23 @@
     {
         &quot;id&quot;: 1,
         &quot;created&quot;: &quot;2015-08-29T15:55:06+0000&quot;,
-        &quot;name&quot;: &quot;Artist 1&quot;
-    },
-]
-</code></pre>
-
-<p>optionally you can get the festivals, reviews, ranking, or genres associated with each artist.</p>
-<p>Request each optional field by including them as a field paramater in the GET request</p>
-<p>GET <a href="#">/artists/?fields=festivals&amp;fields=reviews=&amp;fields=ranking&amp;fields=genres</a></p>
-<pre><code class="json">[
-    {
-        &quot;id&quot;: 1,
-        &quot;created&quot;: &quot;2015-08-29T15:55:06+0000&quot;,
         &quot;name&quot;: &quot;Artist 1&quot;,
-        &quot;festivals&quot;: [
-            {
-                &quot;id&quot; : 1,
-                &quot;name&quot; : &quot;Festival 1&quot;
-            },
-        ],
-        &quot;ranking&quot;: 4.0,
-        &quot;reviews&quot;: [
-             {
-                &quot;festival&quot;: &quot;Festival 1&quot;,
-                &quot;text&quot;: &quot;great&quot;,
-                &quot;id&quot;: 1,
-                &quot;user&quot;: &quot;admin&quot;
-            },
-        ],
-        &quot;genres&quot; : [
-            {
-                &quot;genre&quot;: &quot;blues&quot;,
-                &quot;votes&quot;: 1
-            },
-            {
-                &quot;genre&quot;: &quot;hip hop&quot;,
-                &quot;votes&quot;: 1
-            },
-            {
-                &quot;genre&quot;: &quot;country&quot;,
-                &quot;votes&quot;: 1
-            }
-        ]
-    }
+    &quot;score&quot;: 6.7,
+    &quot;review&quot;: &quot;best band ever.&quot;,
+    &quot;genres&quot;: [&quot;rock&quot;, &quot;pop&quot;, &quot;jazz&quot;],
+    festivals: [
+      {
+        &quot;id&quot;: 3,
+        &quot;created&quot;: &quot;2016-01-02T21:40:28+0000&quot;,
+        &quot;name&quot;: &quot;Festival 3&quot;,
+        &quot;start date&quot;: &quot;2016-05-02&quot;
+      }]
+    },
 ]
 </code></pre>
 
 <p>To get the records for a single artist just put the id of the artist in the url</p>
 <p>GET <a href="#">/artists/1/</a></p>
-<p>The same optional field paramaters apply</p>
 <h1 id="festivals">Festivals</h1>
 <p>GET <a href="#">/festivals/</a></p>
 <pre><code class="json">[
@@ -199,31 +179,20 @@
         &quot;id&quot;: 1,
         &quot;created&quot;: &quot;2015-08-29T15:55:29+0000&quot;,
         &quot;name&quot;: &quot;Festival 1&quot;
+        &quot;start_date&quot;: &quot;2016-02-01&quot;,
+        &quot;performances&quot;: [
+          {
+            &quot;id&quot;: 5
+            &quot;created&quot;: &quot;2016-01-02T21:41:28+0000&quot;,
+            &quot;artist&quot;: 5,
+            &quot;score&quot;: 1.9
+          }]
     },
 ]
 </code></pre>
 
-<p>you can also get the artists, reviews, and rankings associated with a festival in the same manner
-as an artist.</p>
-<p>GET <a href="#">/festivals/?fields=artists&amp;fields=rankings&amp;fields=reviews</a></p>
-<pre><code class="json">[
-    {
-        &quot;id&quot;: 1,
-        &quot;created&quot;: &quot;2015-08-29T15:55:29+0000&quot;,
-        &quot;name&quot;: &quot;Festival 1&quot;,
-        &quot;artists&quot;: [
-            &quot;Artist 1&quot;,
-            &quot;Artist 2&quot;
-        ],
-        &quot;rankings&quot;: [
-            &quot;admin : Artist 1 : Festival 1 : 3.000000&quot;,
-        ],
-        &quot;reviews&quot;: [
-            &quot;great&quot;,
-        ]
-    }
-]
-</code></pre></div>
+<p>GET [/festivals/]1(#)
+Returns a single festival</p></div>
             
         </div>
 
