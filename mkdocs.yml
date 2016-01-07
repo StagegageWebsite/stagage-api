@@ -6,7 +6,9 @@ copyright: Copyright &copy; 2015, <a href="https://github.com/StagegageWebsite">
 dev_addr: 0.0.0.0:5000
 
 pages:
-  - Installation: 'index.md'
-  - API: 'api.md'
-  - Authentication: 'authentication.md'
+  - Home: index.md
+  - Installation: installation.md
+  - API: api.md
+  - Models: models.md
+  - Road Map: next_steps.md
 

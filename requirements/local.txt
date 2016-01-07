@@ -1,15 +1,8 @@
 # dependencies that are only related to deving on your local machine
 -r test.txt
 
-# Debugging
-ipdb==0.8
-ipython==3.1.0
-
 # Docs
 mkdocs==0.14.0
-
-# Command Utils
-Fabric==1.10.1
 
 # api docs
 django-rest-swagger==0.3.4

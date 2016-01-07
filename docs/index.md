@@ -1,44 +1,36 @@
-#stagegage_api
-[![Build Status](https://travis-ci.org/StagegageWebsite/stagegage_api.svg?branch=master)](https://travis-ci.org/StagegageWebsite/stagegage_api)
+The Stagegage API is a RESTful API that provides the backend to the Stagegage frontend.
+It is built using the Django-rest framework.
+
+See the [API documentation](/api) for details on the api endpoints, [installation instructions](/installation)
+for getting it up and running locally, [models documentation](/models) for details on the models, and the [road map](/next_steps) for what is left to be done.
 
 
-# Prerequisites
-- [virtualenv](https://virtualenv.pypa.io/en/latest/)
-- [postgresql](http://www.postgresql.org/)
 
-# Initialize the project
-Create and activate a virtualenv:
 
-```bash
-virtualenv env
-source env/bin/activate
-```
-Install dependencies:
+# Directory Overview
+## Stagegage_api
+Where the business logic of the app lives
 
-```bash
-pip install -r requirements/local.txt
-```
-Create the database:
+**Config:**
+Different Django configurations for running in production vs. running locally.
 
-```bash
-createdb stagegage_api
-```
+**Contrib:**
+Honestly not sure if this directory is needed.
 
-If you need to make a git repo
-```bash
-git init
-git remote add origin git@github.com:StagegageWebsite/stagegage_api.git
-```
+**Scripts:**
+Management commands for running one off scripts.
 
-You can use the fabric file for running local commands or normal bash
+**Stagegage:**
+Where most of the important code lives. The models, serializers, and views are probably the
+most interesting
 
-Migrate and run the server with fabric:
-```bash
-fab migrate
-fab run
-```
+**Users:**
+Where anything to do with Users lives, including user auth.
 
-You probably want to create a superuser too
-```bash
-python stagegage_api/manage.py createsuperuser
-```
+## Docs
+Markdown file for documentation website. Uses the mkdocs library to create a
+documentation website.
+
+## Requirements
+Third party libraries used by the API. base.txt provides the libraries used everywhere,
+and then local, production, and test packages are loaded at the appropriate time.

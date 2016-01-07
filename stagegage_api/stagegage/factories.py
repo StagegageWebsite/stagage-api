@@ -1,13 +1,18 @@
-import random
+"""Factories to create test model objects with random data.
 
+Usage:
+    test_artist = ArtistFactory() - creates object in test database
+    test_artist_obj = ArtistFactory.build() - creates object but does
+        not save it in the database
+
+See factoryboy documentation for more detail.
+"""
 import factory
 from faker import Faker
-from stagegage.models import Genre
+import random
 from users.tests.factories import UserFactory
 
-
 fake = Faker()
-
 
 class ArtistFactory(factory.DjangoModelFactory):
 
@@ -30,17 +35,15 @@ class FestivalFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: 'test_festival_{}'.format(n))
     start_date = factory.lazy_attribute(lambda s: fake.date())
 
-    @factory.post_generation
-    def artists(self, create, extracted, **kwargs):
-        if not create:
-            # Simple build, do nothing.
-            return
 
-        if extracted:
-            # A list of artists were passed in, use them
-            for artist in extracted:
-                self.artists.add(artist)
+class PerformanceFactory(factory.DjangoModelFactory):
 
+    class Meta:
+        model = 'stagegage.Performance'
+
+    artist = factory.SubFactory(ArtistFactory)
+    festival = factory.SubFactory(FestivalFactory)
+    score = factory.lazy_attribute(lambda s: round(random.uniform(0,10), 5))
 
 class RankingSetFactory(factory.DjangoModelFactory):
     class Meta:
@@ -81,10 +84,10 @@ class GenreFactory(factory.DjangoModelFactory):
 
 def set_up_single():
     """Set up a single instance of each model."""
-    #TODO: admin factory
-    user = UserFactory(username='admin', is_staff=True)
+    user = UserFactory(username='admin')
     artist = ArtistFactory()
-    festival = FestivalFactory(artists=(artist,))
+    festival = FestivalFactory()
+    Performance = PerformanceFactory(artist=artist, festival=festival)
     ranking_set = RankingSetFactory(festival=festival, user=user)
     ranking = RankingFactory(ranking_set=ranking_set, artist=artist)
     review = ReviewFactory(user=user, artist=artist, festival=festival)

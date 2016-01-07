@@ -1,10 +1,7 @@
 import os
-from os.path import join
-
 from configurations import Configuration, values
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 class Common(Configuration):
 
@@ -24,7 +21,6 @@ class Common(Configuration):
         'oauth2_provider',
         'social.apps.django_app.default',
         'rest_framework_social_oauth2',
-        # 'corsheaders'
 
         # Your apps
         'scripts',
@@ -35,7 +31,6 @@ class Common(Configuration):
 
     # https://docs.djangoproject.com/en/1.8/topics/http/middleware/
     MIDDLEWARE_CLASSES = (
-        # 'corsheaders.middleware.CorsMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
@@ -43,9 +38,6 @@ class Common(Configuration):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
-
-    # CORS_ORIGIN_ALLOW_ALL = True
-
 
     ROOT_URLCONF = 'urls'
 
@@ -85,9 +77,6 @@ class Common(Configuration):
     DEBUG = values.BooleanValue(False)
     TEMPLATE_DEBUG = DEBUG
 
-    # # Email
-    # EMAIL_BACKEND = values.Value('django.core.mail.backends.smtp.EmailBackend')
-
     MANAGERS = (
         ("Author", 'garrettdwells@gmail.com'),
     )
@@ -107,7 +96,7 @@ class Common(Configuration):
     LOGIN_REDIRECT_URL = '/'
 
     # Static Files
-    STATIC_ROOT = join(os.path.dirname(BASE_DIR), 'staticfiles')
+    STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
     STATIC_URL = '/static/'
     STATICFILES_FINDERS = (
         'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -115,7 +104,7 @@ class Common(Configuration):
     )
 
     # Media files
-    MEDIA_ROOT = join(os.path.dirname(BASE_DIR), 'media')
+    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
     MEDIA_URL = '/media/'
 
     # Logging

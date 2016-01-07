@@ -1,5 +1,7 @@
-"""
-Custom queries for models
+"""Custom queries for models.
+
+Usage:
+  Genre.objects.top_genres(artist)
 """
 from django.db.models import QuerySet, Count
 

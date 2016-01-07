@@ -1,3 +1,10 @@
+"""Register urls for incoming API requests.
+
+The router class has predetermined urls patterns for viewsets so we don't need
+to define every route for our API.
+See http://www.django-rest-framework.org/api-guide/routers/ for more detail.
+"""
+
 from django.conf import settings
 from django.conf.urls import include, patterns
 from django.conf.urls.static import static
@@ -9,12 +16,9 @@ router = DefaultRouter()
 router.register(r'artists', ArtistViewSet, base_name='artists')
 router.register(r'festivals', FestivalViewSet, base_name='festivals')
 
-
 urlpatterns = patterns('',
     (r'^', include(router.urls)),
     (r'^auth/', include('rest_framework_social_oauth2.urls')),
-    # (r'^notifications/', include('push_notifications.urls')),
-    # (r'^docs/', include('rest_framework_swagger.urls')),
+    (r'^docs/', include('rest_framework_swagger.urls')),
     (r'^admin/', include(admin.site.urls)),
-    # (r'^accounts/', include('allauth.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

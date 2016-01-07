@@ -5,17 +5,14 @@ django==1.8.3
 # Django 1.8+ compatible django-configurations
 -e git+https://github.com/alfetopito/django-configurations.git@71b5142354aceb5461d29e5d9e1cdf30b64b657f#egg=django_configurations-master
 
-
 # For the persistence stores
 psycopg2==2.6
-dj-database-url==0.3.0
 
-# Models
+# Models helper functions
 django-model-utils==2.2
 
 # Rest apis
 djangorestframework==3.1.3
-
 
 # Authorization
 python-social-auth==0.2.12

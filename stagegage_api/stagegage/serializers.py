@@ -1,8 +1,10 @@
-"""
-Serializers determine what fields are passed to JSON
+"""Define how Python model objects map to JSON objects and vice-versa.
+
+Usage:
+    artists_json = ArtistSerializer(artist_model_object)
 """
 from rest_framework import serializers
-from .models import Artist, Festival
+from .models import Artist, Festival, Performance
 from .models import Genre, Review
 
 
@@ -15,7 +17,11 @@ class BaseFestivalSerializer(serializers.ModelSerializer):
 
 
 class BaseArtistSerializer(serializers.ModelSerializer):
-    """Artist serializer without festivals."""
+    """Artist serializer without festivals.
+
+    Since review and genres are computed values they are defined to be
+        method fields and calculated by their respective functions.
+    """
     review = serializers.SerializerMethodField()
     genres = serializers.SerializerMethodField()
 
@@ -34,36 +40,48 @@ class BaseArtistSerializer(serializers.ModelSerializer):
             return review.text[:100]
         return ""
 
+class PerformanceSerializer(serializers.ModelSerializer):
+    """Performance serializer."""
+
+    class Meta:
+        model = Performance
+        fields = ('id', 'created', 'artist', 'score')
+
 
 class ArtistSerializer(BaseArtistSerializer):
     """Same as Base serializer but includes festivals."""
-    festivals = BaseFestivalSerializer(many=True)
+    festivals = serializers.SerializerMethodField()
 
     class Meta:
         model = Artist
         fields = ('id', 'created', 'name', 'score', 'review', 'genres', 'festivals')
 
+    def get_festivals(self, artist):
+        festivals = artist.festival_set.all()
+        ser = BaseFestivalSerializer(festivals, many=True)
+        return ser.data
 
-    def create(self, validated_data):
-        festivals_data = validated_data.pop('festivals')
-        artist = Artist.objects.create(**validated_data)
-        for festival_data in festivals_data:
-            festival = Festival.objects.get_or_create(**festival_data)
-            artist.festivals.add(festival)
-        return artist
+    # def create(self, validated_data):
+    #     """Allow festivals to be created at the same time as an artist."""
+    #     festivals_data = validated_data.pop('festivals')
+    #     artist = Artist.objects.create(**validated_data)
+    #     for festival_data in festivals_data:
+    #         festival = Festival.objects.get_or_create(**festival_data)
+    #         artist.festivals.add(festival)
+    #     return artist
 
 
 class FestivalSerializer(BaseFestivalSerializer):
     """Same as base serializer but includes artists."""
-    artists = serializers.SerializerMethodField()
+    performances = serializers.SerializerMethodField()
 
     class Meta:
         model = Festival
-        fields = ('id', 'created', 'name', 'start_date', 'artists')
+        fields = ('id', 'created', 'name', 'start_date', 'performances')
 
-    def get_artists(self, obj):
-        artists = Artist.objects.filter(festivals=obj).order_by('-score')
-        ser = BaseArtistSerializer(artists, many=True)
+    def get_performances(self, festival):
+        performances = Performance.objects.filter(festival = festival)
+        ser = PerformanceSerializer(performances, many=True)
         return ser.data
 
     # def create(self, validated_data):

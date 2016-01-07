@@ -18,45 +18,18 @@ a GET request to [/artists](#) returns a list of all the artists
 	{
 		"id": 1,
 		"created": "2015-08-29T15:55:06+0000",
-		"name": "Artist 1"
-	},
-]
-```
-
-optionally you can get the festivals, reviews, ranking, or genres associated with each artist.
-
-Request each optional field by including them as a field paramater in the GET request
-
-GET [/artists/?fields=festivals&fields=reviews=&fields=ranking&fields=genres](#)
-
-```json
-[
-	{
-		"id": 1,
-		"created": "2015-08-29T15:55:06+0000",
 		"name": "Artist 1",
-		"festivals": [
-			{
-			    "id" : 1,
-			    "name" : "Festival 1"
-			},
-		],
-		"ranking": 4.0,
-		"reviews": [
-			 {
-                "festival": "Festival 1",
-                "text": "great",
-                "id": 1,
-                "user": "admin"
-            },
-		],
-		"genres" : [
-			{
-                "genre": "blues",
-                "votes": 5
-            },
-		]
-	}
+    "score": 6.7,
+    "review": "best band ever.",
+    "genres": ["rock", "pop", "jazz"],
+    festivals: [
+      {
+        "id": 3,
+        "created": "2016-01-02T21:40:28+0000",
+        "name": "Festival 3",
+        "start date": "2016-05-02"
+      }]
+	},
 ]
 ```
 
@@ -64,7 +37,6 @@ To get the records for a single artist just put the id of the artist in the url
 
 GET [/artists/1/](#)
 
-The same optional field paramaters apply
 
 # Festivals
 
@@ -76,35 +48,19 @@ GET [/festivals/](#)
         "id": 1,
         "created": "2015-08-29T15:55:29+0000",
         "name": "Festival 1"
+        "start_date": "2016-02-01",
+        "performances": [
+          {
+            "id": 5
+            "created": "2016-01-02T21:41:28+0000",
+            "artist": 5,
+            "score": 1.9
+          }]
     },
 ]
 ```
 
-you can also get the artists, reviews, and rankings associated with a festival in the same manner
-as an artist.
-
-GET [/festivals/?fields=artists&fields=rankings&fields=reviews](#)
-
-```json
-[
-	{
-		"id": 1,
-        "created": "2015-08-29T15:55:29+0000",
-        "name": "Festival 1",
-        "artists": [
-            "Artist 1",
-            "Artist 2"
-        ],
-        "rankings": [
-            "admin : Artist 1 : Festival 1 : 3.000000",
-        ],
-        "reviews": [
-            "great",
-        ]
-    }
-]
-```
-
-
+GET [/festivals/]1(#)
+Returns a single festival
 
 

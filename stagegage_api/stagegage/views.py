@@ -1,19 +1,18 @@
+"""Views for the models.
+
+We are using viewsets for our models that have most of the endpoints already
+defined.
+"""
 from .models import Artist, Festival
-from .serializers import ArtistSerializer, FestivalSerializer
 from .permissions import IsAdminOrReadOnly
+from .serializers import ArtistSerializer, FestivalSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
 
-
-
-
 class ArtistViewSet(viewsets.ModelViewSet):
-    """
-    Viewset for artists
-    """
+    """Viewset for artists."""
     serializer_class = ArtistSerializer
-    permission_classes = [AllowAny]
-
+    permission_classes = [IsAdminOrReadOnly]
 
     def get_queryset(self):
         #TODO: filter by festivals
@@ -22,9 +21,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
 
 
 class FestivalViewSet(viewsets.ModelViewSet):
-    """
-    List of festivals with associated data
-    """
+    """Viewset for Festivals."""
     queryset = Festival.objects.all()
     serializer_class = FestivalSerializer
     permission_classes = [IsAdminOrReadOnly]

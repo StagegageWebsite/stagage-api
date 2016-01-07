@@ -1,4 +1,8 @@
-#!/usr/bin/env python
+"""Main manage.py script for running commands.
+
+Uses the django-configurations library to determine which config set to run.
+See https://django-configurations.readthedocs.org/en/stable/ for more detail.
+"""
 import os
 import sys
 
