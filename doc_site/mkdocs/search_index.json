@@ -1,0 +1,154 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "The Stagegage API is a RESTful API that provides the backend to the Stagegage frontend.\nIt is built using the Django-rest framework.\n\n\nSee the \nAPI documentation\n for details on the api endpoints, \ninstallation instructions\n\nfor getting it up and running locally, \nmodels documentation\n for details on the models, and the \nroad map\n for what is left to be done.\n\n\nDirectory Overview\n\n\nStagegage_api\n\n\nWhere the business logic of the app lives\n\n\nConfig:\n\nDifferent Django configurations for running in production vs. running locally.\n\n\nContrib:\n\nHonestly not sure if this directory is needed.\n\n\nScripts:\n\nManagement commands for running one off scripts.\n\n\nStagegage:\n\nWhere most of the important code lives. The models, serializers, and views are probably the\nmost interesting\n\n\nUsers:\n\nWhere anything to do with Users lives, including user auth.\n\n\nDocs\n\n\nMarkdown file for documentation website. Uses the mkdocs library to create a\ndocumentation website.\n\n\nRequirements\n\n\nThird party libraries used by the API. base.txt provides the libraries used everywhere,\nand then local, production, and test packages are loaded at the appropriate time.", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#directory-overview", 
+            "text": "", 
+            "title": "Directory Overview"
+        }, 
+        {
+            "location": "/#stagegage_api", 
+            "text": "Where the business logic of the app lives  Config: \nDifferent Django configurations for running in production vs. running locally.  Contrib: \nHonestly not sure if this directory is needed.  Scripts: \nManagement commands for running one off scripts.  Stagegage: \nWhere most of the important code lives. The models, serializers, and views are probably the\nmost interesting  Users: \nWhere anything to do with Users lives, including user auth.", 
+            "title": "Stagegage_api"
+        }, 
+        {
+            "location": "/#docs", 
+            "text": "Markdown file for documentation website. Uses the mkdocs library to create a\ndocumentation website.", 
+            "title": "Docs"
+        }, 
+        {
+            "location": "/#requirements", 
+            "text": "Third party libraries used by the API. base.txt provides the libraries used everywhere,\nand then local, production, and test packages are loaded at the appropriate time.", 
+            "title": "Requirements"
+        }, 
+        {
+            "location": "/installation/", 
+            "text": "Installation\n\n\nPrerequisites\n\n\n\n\nvirtualenv\n\n\npostgresql\n\n\n\n\nInitialize the project\n\n\nCreate and activate a virtualenv:\n\n\nvirtualenv env\nsource env/bin/activate\n\n\n\n\nInstall dependencies:\n\n\npip install -r requirements/local.txt\n\n\n\n\nCreate the database:\n\n\ncreatedb stagegage_api\n\n\n\n\nIf you need to make a git repo\n\n\ngit init\ngit remote add origin git@github.com:StagegageWebsite/stagegage_api.git\n\n\n\n\nYou probably want to create a superuser too\n\n\npython stagegage_api/manage.py createsuperuser", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/installation/#installation", 
+            "text": "", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/installation/#prerequisites", 
+            "text": "virtualenv  postgresql", 
+            "title": "Prerequisites"
+        }, 
+        {
+            "location": "/installation/#initialize-the-project", 
+            "text": "Create and activate a virtualenv:  virtualenv env\nsource env/bin/activate  Install dependencies:  pip install -r requirements/local.txt  Create the database:  createdb stagegage_api  If you need to make a git repo  git init\ngit remote add origin git@github.com:StagegageWebsite/stagegage_api.git  You probably want to create a superuser too  python stagegage_api/manage.py createsuperuser", 
+            "title": "Initialize the project"
+        }, 
+        {
+            "location": "/api/", 
+            "text": "Exploring the API\n\n\nthere are two good ways to explore the api\n\n\nBrowsable API\n\n\nDjango has a built it browsable api. Simply start the webserver and navigate to the appropriate url in the browser. You should be able to test the api and see results right there.\n\n\nAPI Docs\n\n\nThere are automatically created docs on all the api endpoints. Start the webserver and navigate to \nlocalhost:8000/docs\n. This shows a list of all the api endpoints and the accepted method types\n\n\nJSON Responses\n\n\nArtist\n\n\na GET request to \n/artists\n returns a list of all the artists\n\n\n[\n    {\n        \nid\n: 1,\n        \ncreated\n: \n2015-08-29T15:55:06+0000\n,\n        \nname\n: \nArtist 1\n,\n    \nscore\n: 6.7,\n    \nreview\n: \nbest band ever.\n,\n    \ngenres\n: [\nrock\n, \npop\n, \njazz\n],\n    festivals: [\n      {\n        \nid\n: 3,\n        \ncreated\n: \n2016-01-02T21:40:28+0000\n,\n        \nname\n: \nFestival 3\n,\n        \nstart date\n: \n2016-05-02\n\n      }]\n    },\n]\n\n\n\n\nTo get the records for a single artist just put the id of the artist in the url\n\n\nGET \n/artists/1/\n\n\nFestivals\n\n\nGET \n/festivals/\n\n\n[\n    {\n        \nid\n: 1,\n        \ncreated\n: \n2015-08-29T15:55:29+0000\n,\n        \nname\n: \nFestival 1\n\n        \nstart_date\n: \n2016-02-01\n,\n        \nperformances\n: [\n          {\n            \nid\n: 5\n            \ncreated\n: \n2016-01-02T21:41:28+0000\n,\n            \nartist\n: 5,\n            \nscore\n: 1.9\n          }]\n    },\n]\n\n\n\n\nGET [/festivals/]1(#)\nReturns a single festival", 
+            "title": "API"
+        }, 
+        {
+            "location": "/api/#exploring-the-api", 
+            "text": "there are two good ways to explore the api", 
+            "title": "Exploring the API"
+        }, 
+        {
+            "location": "/api/#browsable-api", 
+            "text": "Django has a built it browsable api. Simply start the webserver and navigate to the appropriate url in the browser. You should be able to test the api and see results right there.", 
+            "title": "Browsable API"
+        }, 
+        {
+            "location": "/api/#api-docs", 
+            "text": "There are automatically created docs on all the api endpoints. Start the webserver and navigate to  localhost:8000/docs . This shows a list of all the api endpoints and the accepted method types", 
+            "title": "API Docs"
+        }, 
+        {
+            "location": "/api/#json-responses", 
+            "text": "", 
+            "title": "JSON Responses"
+        }, 
+        {
+            "location": "/api/#artist", 
+            "text": "a GET request to  /artists  returns a list of all the artists  [\n    {\n         id : 1,\n         created :  2015-08-29T15:55:06+0000 ,\n         name :  Artist 1 ,\n     score : 6.7,\n     review :  best band ever. ,\n     genres : [ rock ,  pop ,  jazz ],\n    festivals: [\n      {\n         id : 3,\n         created :  2016-01-02T21:40:28+0000 ,\n         name :  Festival 3 ,\n         start date :  2016-05-02 \n      }]\n    },\n]  To get the records for a single artist just put the id of the artist in the url  GET  /artists/1/", 
+            "title": "Artist"
+        }, 
+        {
+            "location": "/api/#festivals", 
+            "text": "GET  /festivals/  [\n    {\n         id : 1,\n         created :  2015-08-29T15:55:29+0000 ,\n         name :  Festival 1 \n         start_date :  2016-02-01 ,\n         performances : [\n          {\n             id : 5\n             created :  2016-01-02T21:41:28+0000 ,\n             artist : 5,\n             score : 1.9\n          }]\n    },\n]  GET [/festivals/]1(#)\nReturns a single festival", 
+            "title": "Festivals"
+        }, 
+        {
+            "location": "/models/", 
+            "text": "Stagegage Models\n\n\nThere are a few models that comprise the core of the Stagegage API\n\n\nArtists\n\n\nKeeps track of the artist name and the overall artist score. Since the\nscore is not a simple average of all rankings it is difficult to\ncalculate on the fly using the Django ORM. The current solution is to\nhave a sperate python script to calculate the proper score and write\nto the database.\nThe script lives in stagegeage_api/scripts/management/commands/score.py.\nNext steps would be to automate this script to run as a cron job.\n\n\nFestivals\n\n\nKeeps track of the festival name and start date.\n\n\nPerformances\n\n\nCreates a many to many relationship between festivals and artists. A single\nartist performs at many festivals, and a single festival has many artists.\nThis model also keeps track of the artist's performance score. This is a\ncombination of all the user rankings for that artist at a specific festival.\nNotice that this is different from the overall artists score that is kept\ntrack by the artist model.\n\n\nRanking Sets\n\n\nGroups together a set of rankings by a single user for all the artists they\nreview at a single festival.\n\n\nRankings\n\n\nKeeps track of the actual numerical score for an artist by a user. Grouped together\nin a Ranking Set model.\n\n\nReviews\n\n\nText review of an artist, similar to a Yelp review. This review has no impact on\nthe artist or performance score.\n\n\nGenres\n\n\nAlong with a text review, an User can also choose to label an artist under one\nor more genres, selected from a predefined list of choices.\n\n\nUser\n\n\nKeeps track of users that sign up on the site, and associates an auth token with them.", 
+            "title": "Models"
+        }, 
+        {
+            "location": "/models/#stagegage-models", 
+            "text": "There are a few models that comprise the core of the Stagegage API", 
+            "title": "Stagegage Models"
+        }, 
+        {
+            "location": "/models/#artists", 
+            "text": "Keeps track of the artist name and the overall artist score. Since the\nscore is not a simple average of all rankings it is difficult to\ncalculate on the fly using the Django ORM. The current solution is to\nhave a sperate python script to calculate the proper score and write\nto the database.\nThe script lives in stagegeage_api/scripts/management/commands/score.py.\nNext steps would be to automate this script to run as a cron job.", 
+            "title": "Artists"
+        }, 
+        {
+            "location": "/models/#festivals", 
+            "text": "Keeps track of the festival name and start date.", 
+            "title": "Festivals"
+        }, 
+        {
+            "location": "/models/#performances", 
+            "text": "Creates a many to many relationship between festivals and artists. A single\nartist performs at many festivals, and a single festival has many artists.\nThis model also keeps track of the artist's performance score. This is a\ncombination of all the user rankings for that artist at a specific festival.\nNotice that this is different from the overall artists score that is kept\ntrack by the artist model.", 
+            "title": "Performances"
+        }, 
+        {
+            "location": "/models/#ranking-sets", 
+            "text": "Groups together a set of rankings by a single user for all the artists they\nreview at a single festival.", 
+            "title": "Ranking Sets"
+        }, 
+        {
+            "location": "/models/#rankings", 
+            "text": "Keeps track of the actual numerical score for an artist by a user. Grouped together\nin a Ranking Set model.", 
+            "title": "Rankings"
+        }, 
+        {
+            "location": "/models/#reviews", 
+            "text": "Text review of an artist, similar to a Yelp review. This review has no impact on\nthe artist or performance score.", 
+            "title": "Reviews"
+        }, 
+        {
+            "location": "/models/#genres", 
+            "text": "Along with a text review, an User can also choose to label an artist under one\nor more genres, selected from a predefined list of choices.", 
+            "title": "Genres"
+        }, 
+        {
+            "location": "/models/#user", 
+            "text": "Keeps track of users that sign up on the site, and associates an auth token with them.", 
+            "title": "User"
+        }, 
+        {
+            "location": "/next_steps/", 
+            "text": "Project Road Map\n\n\nThere are a few major steps until production\n\n\nAPI improvments\n\n\n\n\nAPI creation of models\n\n\nMake score script a cron job\n\n\nFinish testing\n\n\nFacebook authorization\n\n\n\n\nInfrastructure\n\n\n\n\nRunning app in production\n\n\nCORS framework working with frontend\n\n\nLogging\n\n\nDatabase pooling", 
+            "title": "Road Map"
+        }, 
+        {
+            "location": "/next_steps/#project-road-map", 
+            "text": "There are a few major steps until production", 
+            "title": "Project Road Map"
+        }, 
+        {
+            "location": "/next_steps/#api-improvments", 
+            "text": "API creation of models  Make score script a cron job  Finish testing  Facebook authorization", 
+            "title": "API improvments"
+        }, 
+        {
+            "location": "/next_steps/#infrastructure", 
+            "text": "Running app in production  CORS framework working with frontend  Logging  Database pooling", 
+            "title": "Infrastructure"
+        }
+    ]
+}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+	<title>Models - Stagegage API</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">Stagegage API</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../installation/">Installation</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../api/">API</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">Models</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../next_steps/">Road Map</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../api/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../next_steps/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/stagegagewebsite/stagegage-api">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#stagegage-models">Stagegage Models</a></li>
+        
+            <li><a href="#artists">Artists</a></li>
+        
+            <li><a href="#festivals">Festivals</a></li>
+        
+            <li><a href="#performances">Performances</a></li>
+        
+            <li><a href="#ranking-sets">Ranking Sets</a></li>
+        
+            <li><a href="#rankings">Rankings</a></li>
+        
+            <li><a href="#reviews">Reviews</a></li>
+        
+            <li><a href="#genres">Genres</a></li>
+        
+            <li><a href="#user">User</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="stagegage-models">Stagegage Models</h1>
+<p>There are a few models that comprise the core of the Stagegage API</p>
+<h2 id="artists">Artists</h2>
+<p>Keeps track of the artist name and the overall artist score. Since the
+score is not a simple average of all rankings it is difficult to
+calculate on the fly using the Django ORM. The current solution is to
+have a sperate python script to calculate the proper score and write
+to the database.
+The script lives in stagegeage_api/scripts/management/commands/score.py.
+Next steps would be to automate this script to run as a cron job.</p>
+<h2 id="festivals">Festivals</h2>
+<p>Keeps track of the festival name and start date.</p>
+<h2 id="performances">Performances</h2>
+<p>Creates a many to many relationship between festivals and artists. A single
+artist performs at many festivals, and a single festival has many artists.
+This model also keeps track of the artist's performance score. This is a
+combination of all the user rankings for that artist at a specific festival.
+Notice that this is different from the overall artists score that is kept
+track by the artist model.</p>
+<h2 id="ranking-sets">Ranking Sets</h2>
+<p>Groups together a set of rankings by a single user for all the artists they
+review at a single festival.</p>
+<h2 id="rankings">Rankings</h2>
+<p>Keeps track of the actual numerical score for an artist by a user. Grouped together
+in a Ranking Set model.</p>
+<h2 id="reviews">Reviews</h2>
+<p>Text review of an artist, similar to a Yelp review. This review has no impact on
+the artist or performance score.</p>
+<h2 id="genres">Genres</h2>
+<p>Along with a text review, an User can also choose to label an artist under one
+or more genres, selected from a predefined list of choices.</p>
+<h2 id="user">User</h2>
+<p>Keeps track of users that sign up on the site, and associates an auth token with them.</p></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+                <p>Copyright &copy; 2015, <a href="https://github.com/StagegageWebsite">StagegageWebsite</a>.</p>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
