@@ -1,0 +1,14 @@
+site_name: Stagegage API
+site_description: Stagegage Api
+repo_url: https://github.com/stagegagewebsite/stagegage-api
+site_dir: doc_site
+copyright: Copyright &copy; 2015, <a href="https://github.com/StagegageWebsite">StagegageWebsite</a>.
+dev_addr: 0.0.0.0:5000
+
+pages:
+  - Home: index.md
+  - Installation: installation.md
+  - API: api.md
+  - Models: models.md
+  - Road Map: next_steps.md
+

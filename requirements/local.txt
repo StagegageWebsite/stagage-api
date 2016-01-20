@@ -1,0 +1,10 @@
+# dependencies that are only related to deving on your local machine
+-r test.txt
+
+# Docs
+mkdocs==0.14.0
+
+# api docs
+django-rest-swagger==0.3.4
+
+
