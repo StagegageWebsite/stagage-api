@@ -1,6 +1,0 @@
-# Dependencies related to deploying stagegage_api
--r base.txt
-
-# WSGI Handler
-gunicorn==19.3.0
-

@@ -138,17 +138,29 @@
 <p>There are a few major steps until production</p>
 <h2 id="api-improvments">API improvments</h2>
 <ol>
-<li>API creation of models</li>
-<li>Make score script a cron job</li>
-<li>Finish testing</li>
-<li>Facebook authorization</li>
+<li>Extending the API to POST/PUT/DELETE:
+  Currently the API only has implemented GET requests for artists and festivals.
+  The serializers.py file need to be extended so you can create, update, and delete
+  artists and festivals through the api. Estimated time: 3 hours</li>
+<li>Automating the score script:
+   Currently the score for artists and performances is run manually.
+   This should become a cron job that gets run automatically. The script also
+   needs to be updated to include the Performance model. Time estimated: 3 hours.</li>
+<li>Finish testing:
+   Currently testing serializers and views. Should test creating and deleteing
+   serializers and views, and the score script. Time estimated: 5 hours</li>
+<li>Facebook authorization
+   Social authorization backend for facebook. Time estimated 1 hour.</li>
 </ol>
 <h2 id="infrastructure">Infrastructure</h2>
 <ol>
-<li>Running app in production</li>
-<li>CORS framework working with frontend</li>
-<li>Logging</li>
-<li>Database pooling</li>
+<li>Running app in production
+   Hosting the API on Heroku or AWS. Estimated time: 6 hours</li>
+<li>CORS framework:
+   The API needs to use the CORS framework to accept requests from the frontend
+   on a different host. Time estimated: 30 min</li>
+<li>Logging
+   App monitoring and Logging. Time estimated: 7 hours.</li>
 </ol></div>
             
         </div>
